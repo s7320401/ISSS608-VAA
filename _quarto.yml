@@ -4,18 +4,23 @@ project:
 website:
   title: "ISSS608-VAA"
   navbar:
+    background: "#1A472A"    
+    foreground: "#D1D1D1"   
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: "Hands-on Exercise"
+        menu:
+          - text: "Hands-on Exercise 1"
+            href: "Hands on Exercise/Hand on-Exercise_1.html"
+    right:
+      - text: "Home"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: sketchy           
     css: styles.css
     toc: true
 
 editor: visual
-
