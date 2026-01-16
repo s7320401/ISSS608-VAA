@@ -1,9 +1,15 @@
 ---
 title: "Hands on-Exercise 1"
-format: pdf
+author: "SU, Bo-Han"
 ---
 
-**1.2.2 Importing data**
+Getting Started
+
+Install and lauching R packages
+
+The code chunk below uses p_load() of pacman package to check if tidyverse pakages are installed in the computer. If they are, them they will be launched into R.
+
+# **1.2.2 Importing data**
 
 ```{r}
 pacman::p_load(tidyverse)
@@ -11,15 +17,15 @@ pacman::p_load(tidyverse)
 exam_data <- read_csv("data/Exam_data.csv")
 ```
 
-**1.3.1 R Graphics VS ggplot**
+# **1.3.1 R Graphics VS ggplot**
 
-**R Graphics**
+## **R Graphics**
 
 ```{r}
 hist(exam_data$MATHS)
 ```
 
-**ggplot2**
+## **ggplot2**
 
 ```{r}
 ggplot(data=exam_data, aes(x = MATHS)) +
@@ -30,20 +36,20 @@ ggplot(data=exam_data, aes(x = MATHS)) +
   ggtitle("Distribution of Maths scores")
 ```
 
-**1.5 Essential Grammatical Elements in ggplot2:data**
+# **1.5 Essential Grammatical Elements in ggplot2:data**
 
 ```{r}
 ggplot(data=exam_data)
 ```
 
-**1.6 Essential Grammatical Elements in ggplot2:Aesthetic mappings**
+# **1.6 Essential Grammatical Elements in ggplot2:Aesthetic mappings**
 
 ```{r}
 ggplot(data=exam_data, 
        aes(x= MATHS))
 ```
 
-**1.7 Essentail Grammatical Elements in ggplot2:geom**
+# **1.7 Essentail Grammatical Elements in ggplot2:geom**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -66,7 +72,7 @@ ggplot(data=exam_data,
                      breaks = NULL)  
 ```
 
-**1.7.3 Geometric Objects:geom_histogram()**
+# **1.7.3 Geometric Objects:geom_histogram()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -74,7 +80,7 @@ ggplot(data=exam_data,
   geom_histogram()       
 ```
 
-**1.7.4 Modifying a geometric object by changing geom()**
+# **1.7.4 Modifying a geometric object by changing geom()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -84,7 +90,7 @@ ggplot(data=exam_data,
                  fill="light blue")  
 ```
 
-**1.7.5 Modifying a geometric object by changing aes()**
+# **1.7.5 Modifying a geometric object by changing aes()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -94,7 +100,7 @@ ggplot(data=exam_data,
                  color="grey30")
 ```
 
-**1.7.6 Geometric Objects:geom-density()**
+# **1.7.6 Geometric Objects:geom-density()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -109,7 +115,7 @@ ggplot(data=exam_data,
   geom_density()
 ```
 
-**1.7.7 Geometric Objects:geom_boxplot**
+# **1.7.7 Geometric Objects:geom_boxplot**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -125,7 +131,7 @@ ggplot(data=exam_data,
   geom_boxplot(notch=TRUE)
 ```
 
-**1.7.8 Geometric Objects:geom_violin**
+# **1.7.8 Geometric Objects:geom_violin**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -134,7 +140,7 @@ ggplot(data=exam_data,
   geom_violin()
 ```
 
-**1.7.9 Geometric Objects:geom_point()**
+# **1.7.9 Geometric Objects:geom_point()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -143,7 +149,7 @@ ggplot(data=exam_data,
   geom_point()            
 ```
 
-**1.7.10 geom objects can be combined**
+# **1.7.10 geom objects can be combined**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -154,9 +160,9 @@ ggplot(data=exam_data,
              size = 0.5)        
 ```
 
-**1.8 Essential Grammatical Elements in ggplot2:stat**
+# **1.8 Essential Grammatical Elements in ggplot2:stat**
 
-**1.8.1 Working with stat()**
+# **1.8.1 Working with stat()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -164,7 +170,7 @@ ggplot(data=exam_data,
   geom_boxplot()
 ```
 
-**1.8.2 Working with stat()-stat_summary()method**
+# **1.8.2 Working with stat()-stat_summary()method**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -176,7 +182,7 @@ ggplot(data=exam_data,
                size=4)               
 ```
 
-**1.8.3 Working with stat-the geom()method**
+# **1.8.3 Working with stat-the geom()method**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -188,7 +194,7 @@ ggplot(data=exam_data,
              size=4)          
 ```
 
-**1.8.4 Adding a best fit curve on a scatterplot?**
+# **1.8.4 Adding a best fit curve on a scatterplot?**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -206,9 +212,9 @@ ggplot(data=exam_data,
               linewidth=0.5)
 ```
 
-**1.9 Essential Grammatical Elements in ggplot2:Facets**
+# **1.9 Essential Grammatical Elements in ggplot2:Facets**
 
-**1.9.1 Working with Facet_wrap()**
+# **1.9.1 Working with Facet_wrap()**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -217,7 +223,7 @@ ggplot(data=exam_data,
     facet_wrap(~ CLASS)
 ```
 
-**1.9.2 facet_grid() function**
+# **1.9.2 facet_grid() function**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -226,9 +232,9 @@ ggplot(data=exam_data,
     facet_grid(~ CLASS)
 ```
 
-**1.10 Essential Grammatical Elements in ggplot2:Coordinates**
+# **1.10 Essential Grammatical Elements in ggplot2:Coordinates**
 
-**1.10.1 Working with Coordinate**
+# **1.10.1 Working with Coordinate**
 
 ```{r}
 ggplot(data=exam_data, aes(x=RACE)) + 
@@ -242,7 +248,7 @@ ggplot(data=exam_data,
   coord_flip()
 ```
 
-**1.10.2 Changing the y-and x-axis range**
+# **1.10.2 Changing the y-and x-axis range**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -261,9 +267,9 @@ ggplot(data=exam_data,
                   ylim=c(0,100))
 ```
 
-**1.11 Essential Grammatical Elements in ggplot2:themes**
+# **1.11 Essential Grammatical Elements in ggplot2:themes**
 
-1.11.1 Working with theme
+# 1.11.1 Working with theme
 
 ```{r}
 ggplot(data=exam_data, 

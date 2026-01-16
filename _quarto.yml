@@ -4,13 +4,13 @@ project:
 website:
   title: "ISSS608-VAA"
   navbar:
-    background: "#1A472A"    
-    foreground: "#D1D1D1"   
+    background: "#1A472A"
+    foreground: "#D1D1D1"
     left:
       - text: "Hands-on Exercise"
         menu:
           - text: "Hands-on Exercise 1"
-            href: "Hands on Exercise/Hand on-Exercise_1.html"
+            href: "Hands on Exercise/Hands on Exercise_1/Hands on-Exercise_1.html"
     right:
       - text: "Home"
         href: index.qmd
@@ -19,7 +19,7 @@ website:
 
 format:
   html:
-    theme: sketchy           
+    theme: sketchy
     css: styles.css
     toc: true
 
