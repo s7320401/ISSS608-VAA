@@ -1,9 +1,9 @@
 ---
-title: "Hands on-Exercise 2"
+title: "Hands-on Exercise 2"
 author: "SU, Bo-Han"
 ---
 
-# **2  Beyond ggplot2 Fundamentals**
+# **2 Beyond ggplot2 Fundamentals**
 
 ## 2.2.1 Installing and loading the required libraries
 

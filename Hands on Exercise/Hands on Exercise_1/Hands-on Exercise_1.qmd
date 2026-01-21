@@ -1,5 +1,5 @@
 ---
-title: "Hands on-Exercise 1"
+title: "Hands-on Exercise 1"
 author: "SU, Bo-Han"
 ---
 
