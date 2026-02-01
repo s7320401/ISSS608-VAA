@@ -3,7 +3,7 @@ title: "Hands-on Exercise_3_1"
 author: "SU, Bo-Han"
 ---
 
-# **3  Programming Interactive Data Visualisation with R**
+# **3 Programming Interactive Data Visualisation with R**
 
 ## **3.1 Learning Outcome**
 

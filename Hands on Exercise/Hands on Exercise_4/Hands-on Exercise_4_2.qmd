@@ -1,0 +1,134 @@
+---
+title: "Hands-on Exercise_4_2"
+author: "SU, Bo-Han"
+---
+
+# **10  Visual Statistical Analysis**
+
+## **10.1 Learning Outcome**
+
+In this hands-on exercise, you will gain hands-on experience on using:
+
+-   ggstatsplot package to create visual graphics with rich statistical information,
+
+-   performance package to visualise model diagnostics, and
+
+-   parameters package to visualise model parameters
+
+## **10.2 Visual Statistical Analysis with ggstatsplot**
+
+[**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
+
+```         
+-   To provide alternative statistical inference methods by default.
+-   To follow best practices for statistical reporting. For all statistica
+```
+
+## **10.3 Getting Started**
+
+### **10.3.1 Installing and launching R packages**
+
+```{r}
+pacman::p_load(ggstatsplot, tidyverse)
+```
+
+### **10.3.2 Importing data**
+
+```{r}
+exam <- read_csv("data/Exam_data.csv")
+```
+
+```{r}
+exam
+```
+
+### **10.3.3 One-sample test: *gghistostats()* method**
+
+In the code chunk below, [*gghistostats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/gghistostats.html) is used to to build an visual of one-sample test on English scores.
+
+```{r}
+set.seed(1234)
+
+gghistostats(
+  data = exam,
+  x = ENGLISH,
+  type = "bayes",
+  test.value = 60,
+  xlab = "English scores"
+)
+```
+
+### **10.3.5 How to interpret Bayes Factor**
+
+A **Bayes Factor** can be any positive number. One of the most common interpretations is this one—first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
+
+### **10.3.6 Two-sample mean test: *ggbetweenstats()***
+
+In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for two-sample mean test of Maths scores by gender.
+
+```{r}
+ggbetweenstats(
+  data = exam,
+  x = GENDER, 
+  y = MATHS,
+  type = "np",
+  messages = FALSE
+)
+```
+
+### **10.3.7 Oneway ANOVA Test: *ggbetweenstats()* method**
+
+In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English score by race.
+
+```{r}
+ggbetweenstats(
+  data = exam,
+  x = RACE, 
+  y = ENGLISH,
+  type = "p",
+  mean.ci = TRUE, 
+  pairwise.comparisons = TRUE, 
+  pairwise.display = "s",
+  p.adjust.method = "fdr",
+  messages = FALSE
+)
+```
+
+-   “ns” → only non-significant
+
+-   “s” → only significant
+
+-   “all” → everything
+
+### **10.3.8 Significant Test of Correlation: *ggscatterstats()***
+
+In the code chunk below, [*ggscatterstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html) is used to build a visual for Significant Test of Correlation between Maths scores and English scores.
+
+```{r}
+ggscatterstats(
+  data = exam,
+  x = MATHS,
+  y = ENGLISH,
+  marginal = FALSE,
+  )
+```
+
+### **10.3.9 Significant Test of Association (Depedence) : *ggbarstats()* methods**
+
+In the code chunk below, the Maths scores is binned into a 4-class variable by using [*cut()*](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut).
+
+```{r}
+exam1 <- exam %>% 
+  mutate(MATHS_bins = 
+           cut(MATHS, 
+               breaks = c(0,60,75,85,100))
+)
+```
+
+In this code chunk below [*ggbarstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbarstats.html) is used to build a visual for Significant Test of Association
+
+```{r}
+ggbarstats(exam1, 
+           x = MATHS_bins, 
+           y = GENDER)
+```
