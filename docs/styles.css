@@ -1,1 +1,78 @@
 /* css styles */
+/* Observation  */
+.observation-box {
+  background-color: #f1f8e9; 
+  border: 4px solid #9ccc65; 
+  border-radius: 30px;
+  padding: 25px;
+  margin: 20px 0;
+  
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 20px;
+}
+
+.observation-header {
+  grid-column: 1 / span 2; 
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #dcedc8; 
+  padding-bottom: 5px;
+}
+
+.observation-image {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.observation-content {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.observation-content ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* Key Insight  */
+.insight-box {
+  background-color: #ffebee; 
+  border: 4px solid #ef5350; 
+  border-radius: 30px;
+  padding: 25px;
+  margin: 20px 0;
+  
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 20px;
+}
+
+.insight-header {
+  grid-column: 1 / span 2; 
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #c62828; 
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ffcdd2; 
+  padding-bottom: 5px;
+}
+
+.insight-image {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.insight-content {
+  grid-column: 2;
+  grid-row: 2;
+  color: #333;
+}

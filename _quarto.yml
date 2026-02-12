@@ -26,8 +26,16 @@ website:
             href: "Hands on Exercise/Hands on Exercise_4/Hands-on Exercise_4_3.html"
           - text: "Hands-on Exercise 4-4"
             href: "Hands on Exercise/Hands on Exercise_4/Hands-on Exercise_4_4.html"
-          - text: "Hands-on Exercise 5"
-            href: "Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5.html"
+          - text: "5a. Creating Ternary Plot with R"
+            href: "Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_1.html"
+          - text: "5b. Visual Correlation Analysis"
+            href: "Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_2.html"
+          - text: "5c. Visual Multivariate Analysis with Heatmap"
+            href: "Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_3.html"
+          - text: "5d. Visual Multivariate Analysis with Parallel Coordinates Plot"
+            href: "Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_4.html"
+          - text: "5e. Treemap Visualisation with R"
+            href: "Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_5.html"
           - text: "Hands-on Exercise 6"
             href: "Hands on Exercise/Hands on Exercise_6/Hands-on Exercise_6.html"
           - text: "Hands-on Exercise 7"
@@ -38,15 +46,24 @@ website:
             href: "Hands on Exercise/Hands on Exercise_9/Hands-on Exercise_9.html"
           - text: "Hands-on Exercise 10"
             href: "Hands on Exercise/Hands on Exercise_10/Hands-on-Exercise_10.html"
+      - text: "Take-home Exercise"
+        menu:
+          - text: "Take-home Exercise 1"
+            href: "Take-home Exercise/Take-home_Ex_1/Take-home_Ex_1.html"
+          - text: "Take-home Exercise 2"
+            href: "Take-home Exercise/Take-home_Ex_2/Take-home_Ex_2.html"
+          - text: "Take-home Exercise 3"
+            href: "Take-home Exercise/Take-home_Ex_3/Take-home_Ex_3.html"
     right:
-      - text: "Home"
+      - icon: house-fill
+        text: " "
         href: index.qmd
       - text: "About"
         href: about.qmd
 
 format:
   html:
-    theme: sketchy
+    theme: cosmo
     css: styles.css
     toc: true
 
