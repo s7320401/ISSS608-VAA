@@ -3,12 +3,12 @@ project:
   output-dir: docs
 
 website:
-  title: "<img src='image/hat.png' style='height: 50px; vertical-align:middle; margin-right:15px;'> ISSS608-VAA"
+  title: "<img src='/image/hat.png' style='height: 50px; vertical-align:middle; margin-right:15px;'> ISSS608-VAA"
   navbar:
     background: "#1A472A"
     foreground: "#D1D1D1"
     left:
-      - text: "<img src='image/golden.png' style='height:30px; vertical-align:middle; margin-right:8px;'> Hands-on Exercise"
+      - text: "<img src='/image/golden.png' style='height:30px; vertical-align:middle; margin-right:8px;'> Hands-on Exercise"
         menu:
           - text: "Hands-on Exercise 1"
             href: "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html"
@@ -46,7 +46,7 @@ website:
             href: "Hands on Exercise/Hands on Exercise_9/Hands-on Exercise_9.html"
           - text: "Hands-on Exercise 10"
             href: "Hands on Exercise/Hands on Exercise_10/Hands-on-Exercise_10.html"
-      - text: "<img src='image/timeturner.png' style='height:30px; vertical-align:middle; margin-right:8px;'> Take-home Exercise"
+      - text: "<img src='/image/timeturner.png' style='height:30px; vertical-align:middle; margin-right:8px;'> Take-home Exercise"
         menu:
           - text: "Take-home Exercise 1"
             href: "Take-home Exercise/Take-home_Ex_1/Take-home_Ex_1.html"
