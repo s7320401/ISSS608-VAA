@@ -1,8 +1,12 @@
 ---
-title: "About"
+title: "About this site:"
 ---
 
-About this site
+Hi there! I’m **Cooper**, a graduate student currently pursuing a **Master of IT in Business (MITB)** at **Singapore Management University (SMU)**.
+
+This website serves as a digital gallery of my learning journey in **Data Visualization**. Throughout my coursework, I have focused on transforming complex datasets into clear, impactful, and interactive visual stories. My goal is to bridge the gap between technical analysis and business insights through effective design.
+
+I’m glad to have you here! Feel free to explore my projects and see how I apply visualization techniques to solve real-world problems.
 
 ```{r}
 1 + 1

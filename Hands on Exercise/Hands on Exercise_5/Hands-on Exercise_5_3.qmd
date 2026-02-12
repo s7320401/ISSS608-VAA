@@ -40,6 +40,7 @@ In this hands-on exercise, the data of [World Happines 2018 report](https://wor
 In the code chunk below, **read_csv()** of *readr* is used to import WHData-2018.csv into R and parsed it into tibble R data frame format.
 
 ```{r}
+#| message: false
 wh <- read_csv("data/WHData-2018.csv")
 ```
 

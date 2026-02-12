@@ -44,7 +44,7 @@ Using the **2023 Student Questionnaire Dataset** from the University of Educatio
 # **Ⅱ.** Loading Package
 
 | Library | Description |
-|------------------------------------|------------------------------------|
+|----|----|
 | [**tidyverse**](https://www.tidyverse.org/) | A collection of core packages designed for data science, used extensively for data preparation and wrangling. |
 | [**haven**](https://haven.tidyverse.org/) | To enable R to read and write various data formats such as SAS and SPSS. |
 | [**knitr**](https://yihui.org/knitr/) | For dynamic report generation. |

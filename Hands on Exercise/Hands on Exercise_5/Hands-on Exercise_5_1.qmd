@@ -16,7 +16,7 @@ language:
 
 ## **13.1 Overview**
 
----
+------------------------------------------------------------------------
 
 Ternary plots are a way of displaying the distribution and variability of three-part compositional data. (For example, the proportion of aged, economy active and young population or sand, silt, and clay in soil.) It’s display is a triangle with sides scaled from 0 to 1. Each side represents one of the three components. A point is plotted so that a line drawn perpendicular from the point to each leg of the triangle intersect at the component values of the point.
 
@@ -34,7 +34,7 @@ The hands-on exercise consists of four steps:
 
 ## **13.2 Installing and launching R packages**
 
----
+------------------------------------------------------------------------
 
 For this exercise, two main R packages will be used in this hands-on exercise, they are:
 
@@ -52,7 +52,7 @@ pacman::p_load(plotly, ggtern, tidyverse)
 
 ## **13.3 Data Preparation**
 
----
+------------------------------------------------------------------------
 
 ### **13.3.1 The data**
 

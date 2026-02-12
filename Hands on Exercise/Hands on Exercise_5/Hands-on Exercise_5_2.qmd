@@ -43,6 +43,7 @@ Before you get started, you are required to open a new Quarto document. Keep the
 Next, you will use the code chunk below to install and launch **corrplot**, **ggpubr**, **plotly** and **tidyverse** in RStudio.
 
 ```{r}
+#| message: false
 pacman::p_load(corrplot, ggstatsplot, tidyverse)
 ```
 
@@ -55,6 +56,7 @@ In this hands-on exercise, the [Wine Quality Data Set](https://archive.ics.uci.
 First, let us import the data into R by using *read_csv()* of **readr** package.
 
 ```{r}
+#| message: false
 wine <- read_csv("data/wine_quality.csv")
 ```
 
