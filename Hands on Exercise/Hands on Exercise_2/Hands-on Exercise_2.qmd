@@ -1,11 +1,37 @@
 ---
-title: "Hands-on Exercise 2"
+title: "2 Beyond ggplot2 Fundamentals"
 author: "SU, Bo-Han"
 ---
 
-# **2 Beyond ggplot2 Fundamentals**
+# **2.1 Overview**
+
+---
+
+In this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics. By the end of this exercise, you will be able to:
+
+-   control the placement of annotation on a graph by using functions provided in ggrepel package,
+
+-   create professional publication quality figure by using functions provided in ggthemes and hrbrthemes packages,
+
+-   plot composite figure by combining ggplot2 graphs by using patchwork package.
+
+# **2.2 Getting started**
+
+---
 
 ## 2.2.1 Installing and loading the required libraries
+
+In this exercise, beside tidyverse, four R packages will be used. They are:
+
+-   ggrepel: an R package provides geoms for ggplot2 to repel overlapping text labels.
+
+-   ggthemes: an R package provides some extra themes, geoms, and scales for ‘ggplot2’.
+
+-   hrbrthemes: an R package provides typography-centric themes and theme components for ggplot2.
+
+-   patchwork: an R package for preparing composite figure created using ggplot2.
+
+Code chunk below will be used to check if these packages have been installed and also will load them onto your working R environment.
 
 ```{r}
 pacman::p_load(ggrepel, patchwork, 
@@ -13,10 +39,26 @@ pacman::p_load(ggrepel, patchwork,
                tidyverse) 
 ```
 
+### **2.2.2 Importing data**
+
+For the purpose of this exercise, a data file called *Exam_data* will be used. It consists of year end examination grades of a cohort of primary 3 students from a local school. It is in csv file format.
+
+The code chunk below imports *exam_data.csv* into R environment by using [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html)function of [**readr**](https://readr.tidyverse.org/) package. **readr** is one of the tidyverse package.
+
 ```{r}
 library(tidyverse)
 exam_data <- read_csv("data/Exam_data.csv")
 ```
+
+There are a total of seven attributes in the exam_data tibble data frame. Four of them are categorical data type and the other three are in continuous data type.
+
+-   The categorical attributes are: ID, CLASS, GENDER and RACE.
+
+-   The continuous attributes are: MATHS, ENGLISH and SCIENCE.
+
+# **2.3 Beyond ggplot2 Annotation: ggrepel**
+
+---
 
 ```{r}
 ggplot(data=exam_data, 
@@ -49,7 +91,9 @@ ggplot(data=exam_data,
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
 
-## 2.4 Beyond ggplot2 Themes
+# 2.4 Beyond ggplot2 Themes
+
+---
 
 ```{r}
 ggplot(data=exam_data, 
@@ -101,7 +145,9 @@ ggplot(data=exam_data,
               grid = "Y")
 ```
 
-## 2.5 Beyond Single Graph
+# 2.5 Beyond Single Graph
+
+---
 
 ```{r}
 p1 <- ggplot(data=exam_data, 
@@ -177,3 +223,21 @@ p3 + inset_element(p2,
 patchwork <- (p1 / p2) | p3
 patchwork & theme_economist()
 ```
+
+# **2.6 Reference**
+
+---
+
+-   [Patchwork R package goes nerd viral](https://www.littlemissdata.com/blog/patchwork)
+
+-   [ggrepel](https://ggrepel.slowkow.com/)
+
+-   [ggthemes](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+
+-   [hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/)
+
+-   [ggplot tips: Arranging plots](https://albert-rapp.de/post/2021-10-28-extend-plot-variety/)
+
+-   [ggplot2 Theme Elements Demonstration](https://henrywang.nl/ggplot2-theme-elements-demonstration/)
+
+-   [ggplot2 Theme Elements Reference Sheet](https://isabella-b.com/blog/ggplot2-theme-elements-reference/)

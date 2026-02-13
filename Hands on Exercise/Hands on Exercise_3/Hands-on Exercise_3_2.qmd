@@ -1,17 +1,19 @@
 ---
-title: "Hands-on Exercise_3_2"
+title: "4  Programming Animated Statistical Graphics with R"
 author: "SU, Bo-Han"
 ---
 
-# **4  Programming Animated Statistical Graphics with R**
+# **4.1 Overview**
 
-## **4.1 Overview**
+---
 
 When telling a visually-driven data story, animated graphics tends to attract the interest of the audience and make deeper impression than static graphics. In this hands-on exercise, you will learn how to create animated data visualisation by using **gganimate** and **plotly r** packages. At the same time, you will also learn how to (i) reshape data by using **tidyr** package, and (ii) process, wrangle and transform data by using **dplyr** package.
 
-## **4.2 Getting Started**
+# **4.2 Getting Started**
 
-### **4.2.1 Loading the R packages**
+---
+
+## **4.2.1 Loading the R packages**
 
 First, write a code chunk to check, install and load the following R packages:
 
@@ -30,7 +32,7 @@ pacman::p_load(readxl, gifski, gapminder,
                plotly, gganimate, tidyverse)
 ```
 
-### **4.2.2 Importing the data**
+## **4.2.2 Importing the data**
 
 ```{r}
 col <- c("Country", "Continent")
@@ -60,7 +62,9 @@ globalPop <- read_xls("data/GlobalPopulation.xls",
   mutate(Year = as.integer(Year))
 ```
 
-## **4.3 Animated Data Visualisation: gganimate methods**
+# **4.3 Animated Data Visualisation: gganimate methods**
+
+---
 
 [**gganimate**](https://gganimate.com/) extends the grammar of graphics as implemented by ggplot2 to include the description of animation. It does this by providing a range of new grammar classes that can be added to the plot object in order to customise how it should change with time.
 
@@ -74,7 +78,7 @@ globalPop <- read_xls("data/GlobalPopulation.xls",
 
 -   `ease_aes()` defines how different aesthetics should be eased during transitions.
 
-### **4.3.1 Building a static population bubble plot**
+## **4.3.1 Building a static population bubble plot**
 
 ```{r}
 ggplot(globalPop, aes(x = Old, y = Young, 
@@ -89,7 +93,7 @@ ggplot(globalPop, aes(x = Old, y = Young,
        y = '% Young')
 ```
 
-### **4.3.2 Building the animated bubble plot**
+## **4.3.2 Building the animated bubble plot**
 
 In the code chunk below,
 
@@ -112,11 +116,13 @@ ggplot(globalPop, aes(x = Old, y = Young,
   ease_aes('linear')      
 ```
 
-## **4.4 Animated Data Visualisation: plotly**
+# **4.4 Animated Data Visualisation: plotly**
+
+---
 
 In **Plotly R** package, both `ggplotly()` and `plot_ly()` support key frame animations through the `frame` argument/aesthetic. They also support an `ids`argument/aesthetic to ensure smooth transitions between objects with the same id (which helps facilitate object constancy).
 
-### **4.4.1 Building an animated bubble plot: `ggplotly()`method**
+## **4.4.1 Building an animated bubble plot: `ggplotly()`method**
 
 ```{r}
 gg <- ggplot(globalPop, 
@@ -156,7 +162,7 @@ gg <- ggplot(globalPop,
 ggplotly(gg)
 ```
 
-### **4.4.2 Building an animated bubble plot: `plot_ly()`method**
+## **4.4.2 Building an animated bubble plot: `plot_ly()`method**
 
 ```{r}
 bp <- globalPop %>%

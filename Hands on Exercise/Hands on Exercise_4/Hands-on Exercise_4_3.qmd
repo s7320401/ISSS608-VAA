@@ -1,11 +1,9 @@
 ---
-title: "Hands-on Exercise_4_3"
+title: "11  Visualising Uncertainty"
 author: "SU, Bo-Han"
 ---
 
-# **11  Visualising Uncertainty**
-
-## **11.1 Learning Outcome**
+# **11.1 Learning Outcome**
 
 Visualising uncertainty is relatively new in statistical graphics. In this chapter, you will gain hands-on experience on creating statistical graphics for visualising uncertainty. By the end of this chapter you will be able:
 
@@ -17,9 +15,9 @@ Visualising uncertainty is relatively new in statistical graphics. In this chapt
 
 -   to create hypothetical outcome plots (HOPs) by using ungeviz package.
 
-## **11.2 Getting Started**
+# **11.2 Getting Started**
 
-### **11.2.1 Installing and loading the packages**
+## **11.2.1 Installing and loading the packages**
 
 For the purpose of this exercise, the following R packages will be used, they are:
 
@@ -41,13 +39,13 @@ pacman::p_load(plotly, crosstalk, DT,
                gganimate, tidyverse)
 ```
 
-### **11.2.2 Data import**
+## **11.2.2 Data import**
 
 ```{r}
 exam <- read_csv("data/Exam_data.csv")
 ```
 
-## **11.3 Visualizing the uncertainty of point estimates: ggplot2 methods**
+# **11.3 Visualizing the uncertainty of point estimates: ggplot2 methods**
 
 ```{r}
 my_sum <- exam %>%
@@ -66,7 +64,7 @@ Next, the code chunk below will be used to display *my_sum* tibble data frame 
 knitr::kable(head(my_sum), format = 'html')
 ```
 
-### **11.3.1 Plotting standard error bars of point estimates**
+## **11.3.1 Plotting standard error bars of point estimates**
 
 Now we are ready to plot the standard error bars of mean maths score by race as shown below.
 
@@ -90,7 +88,7 @@ ggplot(my_sum) +
   ggtitle("Standard error of mean maths score by rac")
 ```
 
-### **11.3.2 Plotting confidence interval of point estimates**
+## **11.3.2 Plotting confidence interval of point estimates**
 
 Instead of plotting the standard error bar of point estimates, we can also plot the confidence intervals of mean maths score by race.
 
@@ -115,7 +113,7 @@ ggplot(my_sum) +
        title = "95% confidence interval of mean maths score by race")
 ```
 
-### **11.3.3 Visualizing the uncertainty of point estimates with interactive error bars**
+## **11.3.3 Visualizing the uncertainty of point estimates with interactive error bars**
 
 In this section, you will learn how to plot interactive error bars for the 99% confidence interval of mean maths score by race as shown in the figure below.
 
@@ -166,7 +164,7 @@ bscols(widths = c(4,8),
                      digits=2))
 ```
 
-## **11.4 Visualising Uncertainty: ggdist package**
+# **11.4 Visualising Uncertainty: ggdist package**
 
 -   [**ggdist**](https://mjskay.github.io/ggdist/index.html) is an R package that provides a flexible set of ggplot2 geoms and stats designed especially for visualising distributions and uncertainty.
 
@@ -176,7 +174,7 @@ bscols(widths = c(4,8),
 
     -   for Bayesian models, one visualises probability distributions (see the tidybayes package, which builds on top of ggdist).
 
-### **11.4.1 Visualizing the uncertainty of point estimates: ggdistmethods**
+## **11.4.1 Visualizing the uncertainty of point estimates: ggdistmethods**
 
 In the code chunk below, [`stat_pointinterval()`](https://mjskay.github.io/ggdist/reference/stat_pointinterval.html) of **ggdist** is used to build a visual for displaying distribution of maths scores by race.
 
@@ -209,7 +207,7 @@ exam %>%
     subtitle = "Median Point + Multiple-interval plot")
 ```
 
-### **11.4.2 Visualizing the uncertainty of point estimates: ggdistmethods**
+## **11.4.2 Visualizing the uncertainty of point estimates: ggdistmethods**
 
 ```{r}
 exam %>%
@@ -222,7 +220,7 @@ exam %>%
     subtitle = "Mean Point + Multiple-interval plot")
 ```
 
-### **11.4.3 Visualizing the uncertainty of point estimates: ggdistmethods**
+## **11.4.3 Visualizing the uncertainty of point estimates: ggdistmethods**
 
 In the code chunk below, [`stat_gradientinterval()`](https://mjskay.github.io/ggdist/reference/stat_gradientinterval.html) of **ggdist** is used to build a visual for displaying distribution of maths scores by race.
 
@@ -239,7 +237,7 @@ exam %>%
     subtitle = "Gradient + interval plot")
 ```
 
-## **11.5 Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)**
+# **11.5 Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)**
 
 ### **11.5.1 Installing ungeviz package**
 

@@ -1,11 +1,11 @@
 ---
-title: "Hands-on Exercise_4_4"
+title: "8  Funnel Plots for Fair Comparisons"
 author: "SU, Bo-Han"
 ---
 
-# **8  Funnel Plots for Fair Comparisons**
+# **8.1 Overview**
 
-## **8.1 Overview**
+---
 
 Funnel plot is a specially designed data visualisation for conducting unbiased comparison between outlets, stores or business entities. By the end of this hands-on exercise, you will gain hands-on experience on:
 
@@ -15,7 +15,9 @@ Funnel plot is a specially designed data visualisation for conducting unbiased c
 
 -   plotting interactive funnel plot by using both **plotly R** and **ggplot2** packages.
 
-## **8.2 Installing and Launching R Packages**
+# **8.2 Installing and Launching R Packages**
+
+---
 
 In this exercise, four R packages will be used. They are:
 
@@ -33,7 +35,9 @@ In this exercise, four R packages will be used. They are:
 pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
 ```
 
-## **8.3 Importing Data**
+# **8.3 Importing Data**
+
+---
 
 ```{r}
 covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
@@ -44,7 +48,9 @@ covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
 covid19 
 ```
 
-## **8.4 FunnelPlotR methods**
+# **8.4 FunnelPlotR methods**
+
+---
 
 [**FunnelPlotR**](https://nhs-r-community.github.io/FunnelPlotR/) package uses ggplot to generate funnel plots. It requires a `numerator` (events of interest), `denominator` (population to be considered) and `group`. The key arguments selected for customisation are:
 
@@ -60,7 +66,7 @@ covid19
 
 -   Other aesthetic components such as graph title, axis labels etc.
 
-### **8.4.1 FunnelPlotR methods: The basic plot**
+## **8.4.1 FunnelPlotR methods: The basic plot**
 
 The code chunk below plots a funnel plot.
 
@@ -81,7 +87,7 @@ Things to learn from the code chunk above.
 
 -   `limit`: Plot limits, accepted values are: 95 or 99, corresponding to 95% or 99.8% quantiles of the distribution.
 
-### **8.4.2 FunnelPlotR methods: Makeover 1**
+## **8.4.2 FunnelPlotR methods: Makeover 1**
 
 The code chunk below plots a funnel plot.
 
@@ -99,7 +105,7 @@ funnel_plot(
 
 Things to learn from the code chunk above. + `data_type` argument is used to change from default “SR” to “PR” (i.e. proportions). + `xrange` and `yrange` are used to set the range of x-axis and y-axis.
 
-### **8.4.3 FunnelPlotR methods: Makeover 2**
+## **8.4.3 FunnelPlotR methods: Makeover 2**
 
 The code chunk below plots a funnel plot.
 
@@ -127,11 +133,13 @@ Things to learn from the code chunk above.
 
 -   `x_label` and `y_label` arguments are used to add/edit x-axis and y-axis titles.
 
-## **8.5 Funnel Plot for Fair Visual Comparison: ggplot2 methods**
+# **8.5 Funnel Plot for Fair Visual Comparison: ggplot2 methods**
+
+---
 
 In this section, you will gain hands-on experience on building funnel plots step-by-step by using ggplot2. It aims to enhance you working experience of ggplot2 to customise speciallised data visualisation like funnel plot.
 
-### **8.5.1 Computing the basic derived fields**
+## **8.5.1 Computing the basic derived fields**
 
 To plot the funnel plot from scratch, we need to derive cumulative death rate and standard error of cumulative death rate.
 
@@ -146,7 +154,7 @@ df <- covid19 %>%
 fit.mean <- weighted.mean(df$rate, 1/df$rate.se^2)
 ```
 
-### **8.5.2 Calculate lower and upper limits for 95% and 99.9% CI**
+## **8.5.2 Calculate lower and upper limits for 95% and 99.9% CI**
 
 The code chunk below is used to compute the lower and upper limits for 95% confidence interval.
 
@@ -160,7 +168,7 @@ dfCI <- data.frame(number.ll95, number.ul95, number.ll999,
                    number.ul999, number.seq, fit.mean)
 ```
 
-### **8.5.3 Plotting a static funnel plot**
+## **8.5.3 Plotting a static funnel plot**
 
 In the code chunk below, ggplot2 functions are used to plot a static funnel plot.
 
@@ -210,7 +218,7 @@ p <- ggplot(df, aes(x = Positive, y = rate)) +
 p
 ```
 
-### **8.5.4 Interactive Funnel Plot: plotly + ggplot2**
+## **8.5.4 Interactive Funnel Plot: plotly + ggplot2**
 
 The funnel plot created using ggplot2 functions can be made interactive with `ggplotly()`of **plotly** r package.
 
