@@ -5,7 +5,7 @@ author: "SU, Bo-Han"
 
 # **2.1 Overview**
 
----
+------------------------------------------------------------------------
 
 In this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics. By the end of this exercise, you will be able to:
 
@@ -17,7 +17,7 @@ In this chapter, you will be introduced to several ggplot2 extensions for creati
 
 # **2.2 Getting started**
 
----
+------------------------------------------------------------------------
 
 ## 2.2.1 Installing and loading the required libraries
 
@@ -58,7 +58,7 @@ There are a total of seven attributes in the exam_data tibble data frame. Four o
 
 # **2.3 Beyond ggplot2 Annotation: ggrepel**
 
----
+------------------------------------------------------------------------
 
 ```{r}
 ggplot(data=exam_data, 
@@ -93,7 +93,7 @@ ggplot(data=exam_data,
 
 # 2.4 Beyond ggplot2 Themes
 
----
+------------------------------------------------------------------------
 
 ```{r}
 ggplot(data=exam_data, 
@@ -147,7 +147,7 @@ ggplot(data=exam_data,
 
 # 2.5 Beyond Single Graph
 
----
+------------------------------------------------------------------------
 
 ```{r}
 p1 <- ggplot(data=exam_data, 
@@ -226,7 +226,7 @@ patchwork & theme_economist()
 
 # **2.6 Reference**
 
----
+------------------------------------------------------------------------
 
 -   [Patchwork R package goes nerd viral](https://www.littlemissdata.com/blog/patchwork)
 

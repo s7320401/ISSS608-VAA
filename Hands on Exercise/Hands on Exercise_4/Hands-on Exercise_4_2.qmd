@@ -5,7 +5,7 @@ author: "SU, Bo-Han"
 
 # **10.1 Learning Outcome**
 
----
+------------------------------------------------------------------------
 
 In this hands-on exercise, you will gain hands-on experience on using:
 
@@ -17,7 +17,7 @@ In this hands-on exercise, you will gain hands-on experience on using:
 
 # **10.2 Visual Statistical Analysis with ggstatsplot**
 
----
+------------------------------------------------------------------------
 
 [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
 
@@ -28,7 +28,7 @@ In this hands-on exercise, you will gain hands-on experience on using:
 
 # **10.3 Getting Started**
 
----
+------------------------------------------------------------------------
 
 ## **10.3.1 Installing and launching R packages**
 
@@ -64,7 +64,7 @@ gghistostats(
 
 ## **10.3.5 How to interpret Bayes Factor**
 
----
+------------------------------------------------------------------------
 
 A **Bayes Factor** can be any positive number. One of the most common interpretations is this one—first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
 
@@ -86,7 +86,7 @@ ggbetweenstats(
 
 ## **10.3.7 Oneway ANOVA Test: *ggbetweenstats()* method**
 
----
+------------------------------------------------------------------------
 
 In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English score by race.
 

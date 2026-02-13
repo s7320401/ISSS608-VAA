@@ -5,13 +5,13 @@ author: "SU, Bo-Han"
 
 # **3.1 Learning Outcome**
 
----
+------------------------------------------------------------------------
 
 In this hands-on exercise, you will learn how to create interactive data visualisation by using functions provided by **ggiraph** and **plotlyr** packages.
 
 # **3.2 Getting Started**
 
----
+------------------------------------------------------------------------
 
 -   [**ggiraph**](https://davidgohel.github.io/ggiraph/) for making ‘ggplot’ graphics interactive.
 
@@ -30,7 +30,7 @@ pacman::p_load(ggiraph, plotly,
 
 # **3.3 Importing Data**
 
----
+------------------------------------------------------------------------
 
 ```{r}
 exam_data <- read_csv("data/Exam_data.csv")
@@ -38,7 +38,7 @@ exam_data <- read_csv("data/Exam_data.csv")
 
 # **3.4 Interactive Data Visualisation - ggiraph methods**
 
----
+------------------------------------------------------------------------
 
 Interactive is made with [**ggplot geometries**](https://davidgohel.github.io/ggiraph/reference/index.html#section-interactive-geometries) that can understand three arguments:
 
@@ -71,7 +71,7 @@ Notice that two steps are involved. First, an interactive version of ggplot2 geo
 
 # **3.5 Interactivity**
 
----
+------------------------------------------------------------------------
 
 By hovering the mouse pointer on an data point of interest, the student’s ID will be displayed.
 
@@ -102,7 +102,7 @@ The first three lines of codes in the code chunk create a new field called *too
 
 # **3.6 Interactivity**
 
----
+------------------------------------------------------------------------
 
 By hovering the mouse pointer on an data point of interest, the student’s ID and Class will be displayed.
 
@@ -285,7 +285,7 @@ girafe(code = print(p1 + p2),
 
 # **3.7 Interactive Data Visualisation - plotly methods!**
 
----
+------------------------------------------------------------------------
 
 ## **3.7.1 Creating an interactive scatter plot: plot_ly() method**
 
@@ -339,7 +339,7 @@ subplot(ggplotly(p1),
 
 # **3.8 Interactive Data Visualisation - crosstalk methods!**
 
----
+------------------------------------------------------------------------
 
 ## **3.8.1 Interactive Data Table: DT package**
 

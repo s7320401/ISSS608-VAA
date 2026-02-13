@@ -5,13 +5,13 @@ author: "SU, Bo-Han"
 
 # **9.1 Learning Outcome**
 
----
+------------------------------------------------------------------------
 
 Visualising distribution is not new in statistical analysis. In chapter 1 we have shared with you some of the popular statistical graphics methods for visualising distribution are histogram, probability density curve (pdf), boxplot, notch plot and violin plot and how they can be created by using ggplot2. In this chapter, we are going to share with you two relatively new statistical graphic methods for visualising distribution, namely ridgeline plot and raincloud plot by using ggplot2 and its extensions.
 
 # **9.2 Getting Started**
 
----
+------------------------------------------------------------------------
 
 ## **9.2.1 Installing and loading the packages**
 
@@ -30,7 +30,7 @@ exam <- read_csv("data/Exam_data.csv")
 
 # **9.3 Visualising Distribution with Ridgeline Plot**
 
----
+------------------------------------------------------------------------
 
 ## **9.3.1 Plotting ridgeline graph: ggridges method**
 
@@ -133,7 +133,7 @@ ggplot(exam,
 
 # **9.4 Visualising Distribution with Raincloud Plot**
 
----
+------------------------------------------------------------------------
 
 ## **9.4.1 Plotting a Half Eye graph**
 

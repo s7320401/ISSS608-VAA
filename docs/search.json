@@ -23,7 +23,7 @@
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "",
     "text": "In this chapter, you will learn the basic principles and essential components of ggplot2. At the same time, you will gain hands-on experience on using these components to plot statistical graphics based on the principle of Layered Grammar of Graphics. By then end of this chapter you will be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics."
   },
@@ -765,21 +765,21 @@
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#installing-and-loading-the-required-libraries",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#installing-and-loading-the-required-libraries",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.2.1 Installing and loading the required libraries",
     "text": "1.2.1 Installing and loading the required libraries\nBefore we get started, it is important for us to ensure that the required R packages have been installed. If yes, we will load the R packages. If they have yet to be installed, we will install the R packages and load them onto R environment.\n\n\n\n\n\n\nNoteNote\n\n\n\nThe code chunk on the right assumes that you already have pacman package installed. If not, please go ahead install pacman first.\n\n\n\npacman::p_load(tidyverse)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#importing-data",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#importing-data",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.2.2 Importing data",
     "text": "1.2.2 Importing data\n\npacman::p_load(tidyverse)\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#r-graphics-vs-ggplot",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#r-graphics-vs-ggplot",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.3.1 R Graphics VS ggplot",
     "text": "1.3.1 R Graphics VS ggplot\n\nR Graphics\n\nhist(exam_data$MATHS)\n\n\n\n\n\n\n\n\n\n\nggplot2\n\nggplot(data=exam_data, aes(x = MATHS)) +\n  geom_histogram(bins=10, \n                 boundary = 100,\n                 color=\"black\", \n                 fill=\"grey\") +\n  ggtitle(\"Distribution of Maths scores\")"
   },
@@ -793,119 +793,119 @@
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_histogram",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_histogram",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.3 Geometric Objects:geom_histogram()",
     "text": "1.7.3 Geometric Objects:geom_histogram()\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n`stat_bin()` using `bins = 30`. Pick better value `binwidth`."
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#modifying-a-geometric-object-by-changing-geom",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#modifying-a-geometric-object-by-changing-geom",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.4 Modifying a geometric object by changing geom()",
     "text": "1.7.4 Modifying a geometric object by changing geom()\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20,            \n                 color=\"black\",      \n                 fill=\"light blue\")"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#modifying-a-geometric-object-by-changing-aes",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#modifying-a-geometric-object-by-changing-aes",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.5 Modifying a geometric object by changing aes()",
     "text": "1.7.5 Modifying a geometric object by changing aes()\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom-density",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom-density",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.6 Geometric Objects:geom-density()",
     "text": "1.7.6 Geometric Objects:geom-density()\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_density()           \n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x = MATHS, \n           colour = GENDER)) +\n  geom_density()"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_boxplot",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_boxplot",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.7 Geometric Objects:geom_boxplot",
     "text": "1.7.7 Geometric Objects:geom_boxplot\n\nggplot(data=exam_data, \n       aes(y = MATHS,       \n           x= GENDER)) +    \n  geom_boxplot()            \n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_violin",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_violin",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.8 Geometric Objects:geom_violin",
     "text": "1.7.8 Geometric Objects:geom_violin\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_violin()"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_point",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geometric-objectsgeom_point",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.9 Geometric Objects:geom_point()",
     "text": "1.7.9 Geometric Objects:geom_point()\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point()"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geom-objects-can-be-combined",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#geom-objects-can-be-combined",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.7.10 geom objects can be combined",
     "text": "1.7.10 geom objects can be combined\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot() +                    \n  geom_point(position=\"jitter\", \n             size = 0.5)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-stat",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-stat",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.8.1 Working with stat()",
     "text": "1.8.1 Working with stat()\n\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot()"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-stat-stat_summarymethod",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-stat-stat_summarymethod",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.8.2 Working with stat()-stat_summary()method",
     "text": "1.8.2 Working with stat()-stat_summary()method\n\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  stat_summary(geom = \"point\",       \n               fun = \"mean\",         \n               colour =\"red\",        \n               size=4)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-stat-the-geommethod",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-stat-the-geommethod",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.8.3 Working with stat-the geom()method",
     "text": "1.8.3 Working with stat-the geom()method\n\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  geom_point(stat=\"summary\",        \n             fun=\"mean\",           \n             colour=\"red\",          \n             size=4)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#adding-a-best-fit-curve-on-a-scatterplot",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#adding-a-best-fit-curve-on-a-scatterplot",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.8.4 Adding a best fit curve on a scatterplot?",
     "text": "1.8.4 Adding a best fit curve on a scatterplot?\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(linewidth =0.5) \n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              linewidth=0.5)\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-facet_wrap",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-facet_wrap",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.9.1 Working with Facet_wrap()",
     "text": "1.9.1 Working with Facet_wrap()\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#facet_grid-function",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#facet_grid-function",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.9.2 facet_grid() function",
     "text": "1.9.2 facet_grid() function\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-coordinate",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-coordinate",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.10.1 Working with Coordinate",
     "text": "1.10.1 Working with Coordinate\n\nggplot(data=exam_data, aes(x=RACE)) + \n  geom_bar()\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip()"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#changing-the-y-and-x-axis-range",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#changing-the-y-and-x-axis-range",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.10.2 Changing the y-and x-axis range",
     "text": "1.10.2 Changing the y-and x-axis range\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, size=0.5)\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-theme",
     "href": "Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html#working-with-theme",
-    "title": "Hands-on Exercise 1",
+    "title": "1. A Layered Grammar of Graphics: ggplot2 methods",
     "section": "1.11.1 Working with theme",
     "text": "1.11.1 Working with theme\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_gray()\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_classic()\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal()"
   },
