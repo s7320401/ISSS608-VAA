@@ -55,10 +55,9 @@ website:
           - text: "Take-home Exercise 3"
             href: "Take-home Exercise/Take-home_Ex_3/Take-home_Ex_3.html"
     right:
-      - icon: house-fill
-        text: " "
+      - text: "<img src='/image/castle.png' style='height:40px; vertical-align:middle;'>"
         href: index.qmd
-      - text: "About"
+      - text: "<span style='vertical-align: middle; position: relative; top: 10px;'>About</span>"
         href: about.qmd
 
 format:
