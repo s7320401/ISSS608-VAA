@@ -1,0 +1,12 @@
+name: ShinyDemo
+title: ShinyDemo
+username: coop3r0401
+account: coop3r0401
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16729687
+bundleId: 11610422
+url: https://coop3r0401.shinyapps.io/ShinyDemo/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
