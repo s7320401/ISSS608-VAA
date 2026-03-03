@@ -54,8 +54,10 @@ website:
             href: "Take-home Exercise/Take-home_Ex_1/Take-home_Ex_1.html"
           - text: "Take-home Exercise 2"
             href: "Take-home Exercise/Take-home_Ex_2/Take-home_Ex_2.html"
-          - text: "Take-home Exercise 3"
-            href: "Take-home Exercise/Take-home_Ex_3/Take-home_Ex_3.html"
+      - text: "R Shiny"
+        menu:
+          - text: "In Class Exercise 6"
+            href: "https://coop3r0401.shinyapps.io/In_Class_Ex_6/"
     right:
       - text: "<img src='/image/castle.png' style='height:40px; vertical-align:middle;'>"
         href: index.qmd
