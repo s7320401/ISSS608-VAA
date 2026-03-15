@@ -195,7 +195,7 @@ ggplot(rsquared_plot, aes(x = tree_range, y = rsquared_trees)) +
 ## Mapping Table
 
 |  |  |  |  |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | **Module** | **Parameter** | **Shiny UI Input** | **Description** |
 | **Global Filter** | `income_bracket` | `selectInput()` | Allow users to filter specific income groups to enable localized model analysis. |
 | **Decision Tree** | `cp` (Complexity) | `sliderInput()` | Dynamically adjust pruning parameters to balance model overfitting and underfitting. |
@@ -208,7 +208,7 @@ ggplot(rsquared_plot, aes(x = tree_range, y = rsquared_trees)) +
 ## Expected Outputs
 
 |  |  |  |  |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | **Output** | **R package** | **Shiny UI Output** | **Description** |
 | **Summary Stats** | `valueBox()` | `valueBoxOutput()` | Displays summary statistics for the selected subgroup, including **sample size**, **average risk probability**, and **top occupations**. |
 | **Interactive Tree** | `visNetwork` | `visNetworkOutput()` | Provides an **interactive decision path diagram** with **zoom and click functionalities** for granular exploration. |
@@ -220,7 +220,7 @@ ggplot(rsquared_plot, aes(x = tree_range, y = rsquared_trees)) +
 ## UI Selection Rationale Table
 
 |  |  |  |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **Parameter** | **UI Component** | **Rationale** |
 | **Complexity (CP)** | `sliderInput()` | Allows users to fine-tune the pruning threshold within a specific range with immediate visual feedback. |
 | **Max Depth** | `sliderInput()` | Best for constrained integer ranges, preventing users from entering values that might cause computational lag. |

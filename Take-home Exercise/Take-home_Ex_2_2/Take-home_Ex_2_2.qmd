@@ -232,7 +232,7 @@ print(persona_summary_pro)
 ## Mapping Table
 
 |  |  |  |  |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | **Module** | **Parameter** | **Shiny UI Input** | **Description** |
 | **Data Control** | `sample_size` | `selectInput()` | Allows users to choose data subsets (5k, 10k, 20k) to optimize server performance vs. analysis depth. |
 | **Data Control** | `run_analysis` | `actionButton()` | Employs **event-driven reactivity** to trigger heavy K-means calculations only when requested, saving computational resources. |
@@ -246,7 +246,7 @@ print(persona_summary_pro)
 ## User Input Parameters (Inputs)
 
 |  |  |  |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Parameter Name** | **UI Input ID** | **Description** |
 | **Data Sample Size** | `sample_size` | Allows users to choose between 5k, 10k, or 20k records to balance performance and granularity. |
 | **Number of Clusters (**$k$) | `k_val` | A slider to dynamically adjust the K-means $k$ parameter (Range: 2–8). |
@@ -256,7 +256,7 @@ print(persona_summary_pro)
 ## Visual & Data Outputs (Outputs)
 
 |  |  |  |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Output Name** | **UI Output ID** | **Description** |
 | **Priority InfoBoxes** | `priority_boxes` | Top 3 ranked occupations based on the weighted strategic score (Gold, Silver, Bronze). |
 | **Strategy Card** | `active_strategy_card` | A dynamic UI element that identifies the "Strategy Mode" (e.g., Premium, Defensive). |
@@ -268,7 +268,7 @@ print(persona_summary_pro)
 ## User Interface (UI) Selection Rationale Table
 
 |  |  |  |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Parameter** | **UI Component** | **Rationale** |
 | **Data Sample Size** | `selectInput()` | Ideal for providing a discrete list of optimized choices (5k, 10k, 20k). This prevents users from entering arbitrary large numbers that could crash the Shiny server. |
 | **Clusters (**$k$) | `sliderInput()` | Enables intuitive exploration of model granularity. The sliding mechanism allows users to "feel" the transition between different cluster counts while observing the Elbow Plot. |
@@ -301,7 +301,7 @@ The storyboard outlines the user journey and the spatial organization of the "Cl
 
 -   **Composition & Persona:** The final tier decomposes clusters by occupation and displays a detailed summary table to provide the "human" context behind the numbers.
 
-![](images/clipboard-3120846423.png)
+![](images/clipboard-1063434652.png)
 
 # Selection of Visualisation Techniques & Design Principles
 
