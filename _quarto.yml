@@ -55,7 +55,7 @@ website:
           - text: "Take-home Exercise 2 Decision Tree"
             href: "Take-home Exercise/Take-home_Ex_2/Take-home_Ex_2.html"
           - text: "Take-home Exercise 2 Clustering Analysis"
-            href: "Take-home Exercise/Take-home_Ex_2/Take-home_Ex_2_2.html"
+            href: "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2.html"
       - text: "R Shiny"
         menu:
           - text: "In Class Exercise 6"

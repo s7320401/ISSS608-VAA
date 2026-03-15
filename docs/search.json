@@ -1874,5 +1874,89 @@
     "title": "Takehome Exercise 2 Clustering Analysis",
     "section": "4. Occupation Mix (Stacked Bar Chart)",
     "text": "4. Occupation Mix (Stacked Bar Chart)\n\nTechnique: 100% Stacked Bar Chart with fct_lump.\nPurpose: To analyze the demographic composition of each cluster, allowing users to identify if a segment is dominated by a specific profession or is more diversified."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "",
+    "text": "Check and load packages, ensuring they are sourced from and supported by CRAN.\n\npacman::p_load(tidyverse, scales, knitr,tidymodels,fpc)\ndf_raw &lt;- read_csv(\"data/colombia_customers_processed.csv\")"
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#mapping-table",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#mapping-table",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "Mapping Table",
+    "text": "Mapping Table\n\n\n\n\n\n\n\n\n\nModule\nParameter\nShiny UI Input\nDescription\n\n\nData Control\nsample_size\nselectInput()\nAllows users to choose data subsets (5k, 10k, 20k) to optimize server performance vs. analysis depth.\n\n\nData Control\nrun_analysis\nactionButton()\nEmploys event-driven reactivity to trigger heavy K-means calculations only when requested, saving computational resources.\n\n\nK-means Model\nk_val\nsliderInput()\nDynamically adjusts the number of clusters (\\(k\\)) to explore different levels of customer segmentation granularity.\n\n\nStrategic Logic\nw_vol\nsliderInput()\nAdjusts the weight of Transaction Volume in the priority algorithm to focus on revenue-heavy segments.\n\n\nStrategic Logic\nw_risk\nsliderInput()\nAdjusts the weight of Churn Probability to prioritize defensive strategies for at-risk segments.\n\n\nVisual Analytics\ncluster_scatter\nplotlyOutput()\nVisualizes behavioral distances using log-transformed axes to handle skewed transaction distributions.\n\n\nStrategic Output\npriority_boxes\nuiOutput()\nRenders dynamic Rank Cards (Gold, Silver, Bronze) based on a weighted scoring of Volume, Satisfaction, and Risk.\n\n\nStrategic Output\npersona_table\nDTOutput()\nProvides a high-level summary of cluster personas, including the “Top 3 Occupations” and average churn metrics."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#user-input-parameters-inputs",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#user-input-parameters-inputs",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "User Input Parameters (Inputs)",
+    "text": "User Input Parameters (Inputs)\n\n\n\n\n\n\n\n\nParameter Name\nUI Input ID\nDescription\n\n\nData Sample Size\nsample_size\nAllows users to choose between 5k, 10k, or 20k records to balance performance and granularity.\n\n\nNumber of Clusters (\\(k\\))\nk_val\nA slider to dynamically adjust the K-means \\(k\\) parameter (Range: 2–8).\n\n\nStrategic Weights\nw_vol, w_risk\nSliders (0–1) that allow users to prioritize transaction volume vs. churn risk in the ranking logic.\n\n\nExecution Trigger\nrun_analysis\nAn action button that prevents unnecessary re-calculations until the user is ready."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#visual-data-outputs-outputs",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#visual-data-outputs-outputs",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "Visual & Data Outputs (Outputs)",
+    "text": "Visual & Data Outputs (Outputs)\n\n\n\n\n\n\n\n\nOutput Name\nUI Output ID\nDescription\n\n\nPriority InfoBoxes\npriority_boxes\nTop 3 ranked occupations based on the weighted strategic score (Gold, Silver, Bronze).\n\n\nStrategy Card\nactive_strategy_card\nA dynamic UI element that identifies the “Strategy Mode” (e.g., Premium, Defensive).\n\n\nElbow Plot\nelbow_plot\nA static ggplot diagnostic tool to help users identify the optimal \\(k\\).\n\n\nBehavioral Map\ncluster_scatter\nAn interactive Plotly scatter plot showing the clusters in log-scale.\n\n\nRetention Quadrant\nquadrant_plot\nA Plotly bubble chart mapping churn risk against transaction volume.\n\n\nSegment Summary\npersona_table\nA DT table summarizing the Top 3 occupations and key metrics per cluster."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#user-interface-ui-selection-rationale-table",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#user-interface-ui-selection-rationale-table",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "User Interface (UI) Selection Rationale Table",
+    "text": "User Interface (UI) Selection Rationale Table\n\n\n\n\n\n\n\n\nParameter\nUI Component\nRationale\n\n\nData Sample Size\nselectInput()\nIdeal for providing a discrete list of optimized choices (5k, 10k, 20k). This prevents users from entering arbitrary large numbers that could crash the Shiny server.\n\n\nClusters (\\(k\\))\nsliderInput()\nEnables intuitive exploration of model granularity. The sliding mechanism allows users to “feel” the transition between different cluster counts while observing the Elbow Plot.\n\n\nStrategic Weights\nsliderInput()\nUses a step of 0.1 to allow precise “tuning” of the business strategy. This provides a tactile way for managers to balance the trade-off between Volume and Risk.\n\n\nExecute Analysis\nactionButton()\nCritical for Event Reactivity. Since K-means and scoring calculations are computationally expensive, this ensures the app only updates once all parameters are finalized.\n\n\nStrategic Rankings\ninfoBox()\nLeveraging Visual Hierarchy, these boxes use semantic colors (Gold, Silver, Bronze) and icons to provide immediate, high-level insights for decision-makers.\n\n\nBehavioral Maps\nplotlyOutput()\nUnlike static plots, Plotly allows for Hover Interactivity, enabling users to identify specific “Occupations” behind the data points for better persona validation.\n\n\nPersona Summary\nDTOutput()\nChosen for its built-in search and pagination. It allows users to drill down into cluster-specific metrics without overwhelming the dashboard’s visual real-time space.\n\n\nNavigation\ndashboardSidebar()\nProvides a Separation of Concerns by isolating control settings and high-level navigation from the main analytical workspace, reducing cognitive load."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#the-control-center-sidebar",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#the-control-center-sidebar",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "The Control Center (Sidebar)",
+    "text": "The Control Center (Sidebar)\n\nParameter Tuning: The sidebar serves as the primary navigation and configuration hub, where users define the scope of analysis via sample size and cluster counts.\nStrategic Weighting: Users can interactively shift the dashboard’s focus between revenue (Volume) and stability (Risk) using intuitive sliders, allowing for real-time strategy simulation."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#executive-summary-top-tier",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#executive-summary-top-tier",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "Executive Summary (Top Tier)",
+    "text": "Executive Summary (Top Tier)\n\nPriority Ranking: At the top of the page, high-impact segments are immediately highlighted using Gold, Silver, and Bronze Rank cards to guide rapid decision-making.\nStrategic Guidance: The central recommendation panel translates complex cluster metrics into plain-English managerial actions based on the active strategy mode."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#analytical-deep-dive-middle-bottom-tier",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#analytical-deep-dive-middle-bottom-tier",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "Analytical Deep-Dive (Middle & Bottom Tier)",
+    "text": "Analytical Deep-Dive (Middle & Bottom Tier)\n\nDiagnostic & Distribution: The middle tier provides the technical foundation, showing the mathematical validity of the clusters and their distribution in the behavioral space.\nComposition & Persona: The final tier decomposes clusters by occupation and displays a detailed summary table to provide the “human” context behind the numbers."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#model-diagnosis-elbow-plot",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#model-diagnosis-elbow-plot",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "1. Model Diagnosis (Elbow Plot)",
+    "text": "1. Model Diagnosis (Elbow Plot)\n\nTechnique: Line Chart with point markers.\nPurpose: To assist users in mathematically determining the optimal number of clusters (k) by identifying the “elbow point” where the Total Within-cluster Sum of Squares (WSS) stabilizes."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#behavioral-map-scatter-plot",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#behavioral-map-scatter-plot",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "2. Behavioral Map (Scatter Plot)",
+    "text": "2. Behavioral Map (Scatter Plot)\n\nTechnique: Interactive Scatter Plot with Log-Log scaling.\nPurpose: To visualize the behavioral distance between clusters while handling the extreme skewness of transaction data through log transformation."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#retention-quadrant-value-vs.-risk",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#retention-quadrant-value-vs.-risk",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "3. Retention Quadrant (Value vs. Risk)",
+    "text": "3. Retention Quadrant (Value vs. Risk)\n\nTechnique: 4-Quadrant Bubble Chart.\nPurpose: To facilitate strategic positioning by mapping occupations based on their average transaction volume and churn probability, highlighting high-priority “at-risk” segments."
+  },
+  {
+    "objectID": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#occupation-mix-stacked-bar-chart",
+    "href": "Take-home Exercise/Take-home_Ex_2_2/Take-home_Ex_2_2_pre.html#occupation-mix-stacked-bar-chart",
+    "title": "Takehome Exercise 2 Clustering Analysis",
+    "section": "4. Occupation Mix (Stacked Bar Chart)",
+    "text": "4. Occupation Mix (Stacked Bar Chart)\n\nTechnique: 100% Stacked Bar Chart with fct_lump.\nPurpose: To analyze the demographic composition of each cluster, allowing users to identify if a segment is dominated by a specific profession or is more diversified."
   }
 ]
