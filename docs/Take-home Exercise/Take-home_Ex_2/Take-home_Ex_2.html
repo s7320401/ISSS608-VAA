@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="SU Bo-Han">
+<meta name="dcterms.date" content="2026-03-13">
+
+<title>Takehome Exercise 2 Decision Tree –  ISSS608-VAA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-cdf010de00a9ec69735e7a7b66ba1d66.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="../../site_libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="../../site_libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="../../site_libs/visNetwork-binding-2.1.4/visNetwork.js"></script>
+<script src="../../site_libs/FileSaver-1.1.20151003/FileSaver.min.js"></script>
+<script src="../../site_libs/Blob-1.0/Blob.js"></script>
+<script src="../../site_libs/canvas-toBlob-1.0/canvas-toBlob.js"></script>
+<script src="../../site_libs/html2canvas-0.5.0/html2canvas.js"></script>
+<script src="../../site_libs/jspdf-1.3.2/jspdf.debug.js"></script>
+<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<link href="../../site_libs/jquery-sparkline-2.1.2/jquery.sparkline.css" rel="stylesheet">
+<script src="../../site_libs/jquery-sparkline-2.1.2/jquery.sparkline.js"></script>
+<script src="../../site_libs/sparkline-binding-2.0/sparkline.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title"><img src="../../image/hat.png" style="height: 50px; vertical-align:middle; margin-right:15px;"> ISSS608-VAA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-img-srcimagegolden.png-styleheight30px-vertical-alignmiddle-margin-right8px-hands-on-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text"><img src="../../image/golden.png" style="height:30px; vertical-align:middle; margin-right:8px;"> Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-img-srcimagegolden.png-styleheight30px-vertical-alignmiddle-margin-right8px-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_1/Hands-on Exercise_1.html">
+ <span class="dropdown-text">1. A Layered Grammar of Graphics: ggplot2 methods</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_2/Hands-on Exercise_2.html">
+ <span class="dropdown-text">2. Beyond ggplot2 Fundamentals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_3/Hands-on Exercise_3_1.html">
+ <span class="dropdown-text">3a. Programming Interactive Data Visualisation with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_3/Hands-on Exercise_3_2.html">
+ <span class="dropdown-text">3b. Programming Animated Statistical Graphics with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_4/Hands-on Exercise_4_1.html">
+ <span class="dropdown-text">4a. Visualising Distribution</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_4/Hands-on Exercise_4_2.html">
+ <span class="dropdown-text">4b. Visual Statistical Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_4/Hands-on Exercise_4_3.html">
+ <span class="dropdown-text">4c. Visualising Uncertainty</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_4/Hands-on Exercise_4_4.html">
+ <span class="dropdown-text">4d. Funnel Plots for Fair Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_1.html">
+ <span class="dropdown-text">5a. Creating Ternary Plot with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_2.html">
+ <span class="dropdown-text">5b. Visual Correlation Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_3.html">
+ <span class="dropdown-text">5c. Visual Multivariate Analysis with Heatmap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_4.html">
+ <span class="dropdown-text">5d. Visual Multivariate Analysis with Parallel Coordinates Plot</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_5/Hands-on Exercise_5_5.html">
+ <span class="dropdown-text">5e. Treemap Visualisation with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_7/Hands-on Exercise_7.html">
+ <span class="dropdown-text">7. Visualising and Analysing Time-oriented Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_8/Hands-on Exercise_8_1.html">
+ <span class="dropdown-text">8a. Choropleth Mapping with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_8/Hands-on Exercise_8_2.html">
+ <span class="dropdown-text">8b. Visualising Geospatial Point Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_8/Hands-on Exercise_8_3.html">
+ <span class="dropdown-text">8c. Analytical Mapping</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_9/Hands-on Exercise_9.html">
+ <span class="dropdown-text">9.Modelling, Visualising and Analysing Network Data with R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands on Exercise/Hands on Exercise_10/Hands-on-Exercise_10.html">
+ <span class="dropdown-text">Hands-on Exercise 10</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-img-srcimagetimeturner.png-styleheight30px-vertical-alignmiddle-margin-right8px-take-home-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text"><img src="../../image/timeturner.png" style="height:30px; vertical-align:middle; margin-right:8px;"> Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-img-srcimagetimeturner.png-styleheight30px-vertical-alignmiddle-margin-right8px-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home Exercise/Take-home_Ex_1/Take-home_Ex_1.html">
+ <span class="dropdown-text">Take-home Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-home Exercise/Take-home_Ex_2/Take-home_Ex_2.html">
+ <span class="dropdown-text">Take-home Exercise 2 Decision Tree</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-home Exercise/Take-home_Ex_2/Take-home_Ex_2_2.html">
+ <span class="dropdown-text">Take-home Exercise 2 Clustering Analysis</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-r-shiny" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">R Shiny</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-r-shiny">    
+        <li>
+    <a class="dropdown-item" href="https://coop3r0401.shinyapps.io/In_Class_Ex_6/">
+ <span class="dropdown-text">In Class Exercise 6</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text"><img src="../../image/castle.png" style="height:40px; vertical-align:middle;"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text"><span style="vertical-align: middle; position: relative; top: 10px;">About</span></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-packages-and-data" id="toc-load-packages-and-data" class="nav-link active" data-scroll-target="#load-packages-and-data"><strong>Load Packages and Data</strong></a></li>
+  <li><a href="#regression-tree" id="toc-regression-tree" class="nav-link" data-scroll-target="#regression-tree"><strong>Regression Tree</strong></a>
+  <ul class="collapse">
+  <li><a href="#basic-regression-tree-model" id="toc-basic-regression-tree-model" class="nav-link" data-scroll-target="#basic-regression-tree-model"><strong>Basic Regression Tree model</strong></a></li>
+  <li><a href="#visualising-the-regression-tree" id="toc-visualising-the-regression-tree" class="nav-link" data-scroll-target="#visualising-the-regression-tree"><strong>Visualising the Regression Tree</strong></a></li>
+  </ul></li>
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><strong>Random Forest</strong></a>
+  <ul class="collapse">
+  <li><a href="#splitting-of-data-set-into-train-vs.-test-data" id="toc-splitting-of-data-set-into-train-vs.-test-data" class="nav-link" data-scroll-target="#splitting-of-data-set-into-train-vs.-test-data"><strong>Splitting of data set into train vs.&nbsp;test data</strong></a></li>
+  <li><a href="#hyperparameter-tuning-and-training-of-model" id="toc-hyperparameter-tuning-and-training-of-model" class="nav-link" data-scroll-target="#hyperparameter-tuning-and-training-of-model"><strong>Hyperparameter Tuning and Training of Model</strong></a></li>
+  </ul></li>
+  <li><a href="#mapping-r-parameters-to-shiny-ui-components" id="toc-mapping-r-parameters-to-shiny-ui-components" class="nav-link" data-scroll-target="#mapping-r-parameters-to-shiny-ui-components">Mapping R Parameters to Shiny UI Components</a>
+  <ul class="collapse">
+  <li><a href="#mapping-table" id="toc-mapping-table" class="nav-link" data-scroll-target="#mapping-table">Mapping Table</a></li>
+  <li><a href="#expected-outputs" id="toc-expected-outputs" class="nav-link" data-scroll-target="#expected-outputs">Expected Outputs</a></li>
+  <li><a href="#ui-selection-rationale-table" id="toc-ui-selection-rationale-table" class="nav-link" data-scroll-target="#ui-selection-rationale-table">UI Selection Rationale Table</a></li>
+  </ul></li>
+  <li><a href="#ui-design-storyboard" id="toc-ui-design-storyboard" class="nav-link" data-scroll-target="#ui-design-storyboard">UI Design (Storyboard)</a>
+  <ul class="collapse">
+  <li><a href="#module-1-decision-tree-analysis" id="toc-module-1-decision-tree-analysis" class="nav-link" data-scroll-target="#module-1-decision-tree-analysis">Module 1: Decision Tree Analysis</a></li>
+  <li><a href="#module-2-random-forest-what-if-simulator" id="toc-module-2-random-forest-what-if-simulator" class="nav-link" data-scroll-target="#module-2-random-forest-what-if-simulator">Module 2: Random Forest &amp; What-If Simulator</a></li>
+  <li><a href="#module-3-automated-insights" id="toc-module-3-automated-insights" class="nav-link" data-scroll-target="#module-3-automated-insights">Module 3: Automated Insights</a></li>
+  </ul></li>
+  <li><a href="#selection-of-visualisation-techniques-design-principles" id="toc-selection-of-visualisation-techniques-design-principles" class="nav-link" data-scroll-target="#selection-of-visualisation-techniques-design-principles"><strong>Selection of Visualisation Techniques &amp; Design Principles</strong></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Takehome Exercise 2 Decision Tree</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>SU Bo-Han </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 13, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">March 15, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="load-packages-and-data" class="level1">
+<h1><strong>Load Packages and Data</strong></h1>
+<p>Check and load packages, ensuring they are sourced from and supported by CRAN.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, rpart, rpart.plot, sparkline, visNetwork, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               caret, ranger, patchwork, randomForest)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"colombia_customers_processed.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    churn_probability,      </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    age,                    </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    location, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    income_bracket,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    active_products,        </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    tx_count,                </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    customer_tenure,         </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    failed_transactions,     </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    credit_utilization_ratio,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    satisfaction_score,      </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    complaint_topics        </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="regression-tree" class="level1">
+<h1><strong>Regression Tree</strong></h1>
+<section id="basic-regression-tree-model" class="level3">
+<h3 class="anchored" data-anchor-id="basic-regression-tree-model"><strong>Basic Regression Tree model</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>anova.model <span class="ot">&lt;-</span> <span class="cf">function</span>(min_split, complexity_parameter, max_depth) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart</span>(churn_probability <span class="sc">~</span> ., </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> df,          </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">"anova"</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">minsplit =</span> min_split, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">cp =</span> complexity_parameter, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">maxdepth =</span> max_depth))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>fit_tree <span class="ot">&lt;-</span> <span class="fu">anova.model</span>(<span class="dv">5</span>, <span class="fl">0.001</span>, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualising-the-regression-tree" class="level3">
+<h3 class="anchored" data-anchor-id="visualising-the-regression-tree"><strong>Visualising the Regression Tree</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visTree</span>(fit_tree, <span class="at">edgesFontSize =</span> <span class="dv">14</span>, <span class="at">nodesFontSize =</span> <span class="dv">16</span>, <span class="at">width =</span> <span class="st">"100%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="htmlwidget-a81ec46a4ffe157eb008" style="width:100%;height:600px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a81ec46a4ffe157eb008">{"x":{"nodes":{"id":[1,2,4,8,16,32,33,17,9,18,36,37,74,75,19,5,10,20,21,42,43,11,22,23,3,6,12,24,25,50,51,102,103,13,26,27,7,14,28,56,57,29,58,116,117,59,118,119,15,30,31,62,63],"label":["active_products","active_products","active_products","age","satisfaction_score","0.161","0.189","0.227","age","satisfaction_score","0.212","age","0.229","0.249","0.279","age","satisfaction_score","0.263","age","0.278","0.298","satisfaction_score","0.31","0.335","active_products","age","satisfaction_score","0.312","age","0.329","satisfaction_score","0.345","0.368","satisfaction_score","0.36","0.385","age","satisfaction_score","age","0.354","0.374","age","satisfaction_score","0.376","0.398","satisfaction_score","0.396","0.416","satisfaction_score","0.409","satisfaction_score","0.432","0.454"],"level":[1,2,3,4,5,6,6,5,4,5,6,6,7,7,5,3,4,5,5,6,6,4,5,5,2,3,4,5,5,6,6,7,7,4,5,5,3,4,5,6,6,5,6,7,7,6,7,7,4,5,5,6,6],"color":["#F1B8C2","#F1B8C2","#F1B8C2","#A9D1A5","#B4C7ED","#E6E0F8","#DDCAF1","#D0AEE7","#A9D1A5","#B4C7ED","#D5B9EB","#A9D1A5","#D0ACE7","#C99DE2","#C087DB","#A9D1A5","#B4C7ED","#C592DF","#A9D1A5","#C087DB","#BA78D6","#B4C7ED","#B670D3","#AE5DCD","#F1B8C2","#A9D1A5","#B4C7ED","#B56ED3","#A9D1A5","#B062CF","#B4C7ED","#AB55CB","#A444C5","#B4C7ED","#A64AC7","#9E37C1","#A9D1A5","#B4C7ED","#A9D1A5","#A84FC9","#A240C4","#A9D1A5","#B4C7ED","#A13EC3","#9A2EBE","#B4C7ED","#9B2FBF","#9520BA","#B4C7ED","#9725BB","#B4C7ED","#8F14B6","#8904B1"],"value":[48723,14494,7297,2426,1569,396,1173,857,4871,3298,807,2491,1204,1287,1573,7197,4701,1125,3576,1734,1842,2496,675,1821,34229,14653,9680,2354,7326,3606,3720,3189,531,4973,1332,3641,19576,13110,3204,1692,1512,9906,4826,4199,627,5080,4404,676,6466,1770,4696,4167,529],"shape":["dot","dot","dot","dot","dot","square","square","square","dot","dot","square","dot","square","square","square","dot","dot","square","dot","square","square","dot","square","square","dot","dot","dot","square","dot","square","dot","square","square","dot","square","square","dot","dot","dot","square","square","dot","dot","square","square","dot","square","square","dot","square","dot","square","square"],"title":["<div style=\"text-align:center;\">N : <b>100%<\/b> (48723)<br>Complexity : <b>0.58<\/b><br>Mean : <b>0.343<\/b><br>Variance : <b>0.004<\/b><\/div>","<div style=\"text-align:center;\">N : <b>29.7%<\/b> (14494)<br>Complexity : <b>0.075<\/b><br>Mean : <b>0.264<\/b><br>Variance : <b>0.002<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 2.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>15%<\/b> (7297)<br>Complexity : <b>0.018<\/b><br>Mean : <b>0.231<\/b><br>Variance : <b>0.002<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5%<\/b> (2426)<br>Complexity : <b>0.005<\/b><br>Mean : <b>0.198<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.2%<\/b> (1569)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.182<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>0.8%<\/b> (396)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.161<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.4%<\/b> (1173)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.189<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.8%<\/b> (857)<br>Complexity : <b>0<\/b><br>Mean : <b>0.227<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10%<\/b> (4871)<br>Complexity : <b>0.01<\/b><br>Mean : <b>0.248<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.8%<\/b> (3298)<br>Complexity : <b>0.002<\/b><br>Mean : <b>0.233<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.7%<\/b> (807)<br>Complexity : <b>0<\/b><br>Mean : <b>0.212<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.1%<\/b> (2491)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.239<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.5%<\/b> (1204)<br>Complexity : <b>0<\/b><br>Mean : <b>0.229<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.6%<\/b> (1287)<br>Complexity : <b>0<\/b><br>Mean : <b>0.249<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.2%<\/b> (1573)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.279<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>14.8%<\/b> (7197)<br>Complexity : <b>0.015<\/b><br>Mean : <b>0.298<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9.6%<\/b> (4701)<br>Complexity : <b>0.002<\/b><br>Mean : <b>0.282<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.3%<\/b> (1125)<br>Complexity : <b>0<\/b><br>Mean : <b>0.263<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.3%<\/b> (3576)<br>Complexity : <b>0.002<\/b><br>Mean : <b>0.289<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.6%<\/b> (1734)<br>Complexity : <b>0<\/b><br>Mean : <b>0.278<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.8%<\/b> (1842)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.298<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.1%<\/b> (2496)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.328<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.4%<\/b> (675)<br>Complexity : <b>0<\/b><br>Mean : <b>0.31<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.7%<\/b> (1821)<br>Complexity : <b>0<\/b><br>Mean : <b>0.335<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>70.3%<\/b> (34229)<br>Complexity : <b>0.094<\/b><br>Mean : <b>0.376<\/b><br>Variance : <b>0.002<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 2.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>30.1%<\/b> (14653)<br>Complexity : <b>0.032<\/b><br>Mean : <b>0.348<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>19.9%<\/b> (9680)<br>Complexity : <b>0.006<\/b><br>Mean : <b>0.332<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>4.8%<\/b> (2354)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.312<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>15%<\/b> (7326)<br>Complexity : <b>0.003<\/b><br>Mean : <b>0.339<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.4%<\/b> (3606)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.329<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.6%<\/b> (3720)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.348<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.5%<\/b> (3189)<br>Complexity : <b>0<\/b><br>Mean : <b>0.345<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 37<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.1%<\/b> (531)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.368<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.2%<\/b> (4973)<br>Complexity : <b>0.003<\/b><br>Mean : <b>0.378<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.7%<\/b> (1332)<br>Complexity : <b>0<\/b><br>Mean : <b>0.36<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.5%<\/b> (3641)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.385<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>40.2%<\/b> (19576)<br>Complexity : <b>0.04<\/b><br>Mean : <b>0.397<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>26.9%<\/b> (13110)<br>Complexity : <b>0.007<\/b><br>Mean : <b>0.383<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.6%<\/b> (3204)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.363<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.5%<\/b> (1692)<br>Complexity : <b>0<\/b><br>Mean : <b>0.354<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.1%<\/b> (1512)<br>Complexity : <b>0<\/b><br>Mean : <b>0.374<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>20.3%<\/b> (9906)<br>Complexity : <b>0.004<\/b><br>Mean : <b>0.389<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9.9%<\/b> (4826)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.379<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>8.6%<\/b> (4199)<br>Complexity : <b>0<\/b><br>Mean : <b>0.376<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.3%<\/b> (627)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.398<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.4%<\/b> (5080)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.398<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (4404)<br>Complexity : <b>0<\/b><br>Mean : <b>0.396<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.4%<\/b> (676)<br>Complexity : <b>0<\/b><br>Mean : <b>0.416<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>13.3%<\/b> (6466)<br>Complexity : <b>0.004<\/b><br>Mean : <b>0.428<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.6%<\/b> (1770)<br>Complexity : <b>0<\/b><br>Mean : <b>0.409<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9.6%<\/b> (4696)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.435<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>8.6%<\/b> (4167)<br>Complexity : <b>0<\/b><br>Mean : <b>0.432<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.1%<\/b> (529)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.454<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>"],"fixed":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"colorClust":["#AC57CB","#C592DE","#CFABE6","#DAC4EF","#DFD0F2","#E6E0F8","#DDCAF1","#D0AEE7","#CA9EE2","#CFA9E6","#D5B9EB","#CDA4E4","#D0ACE7","#C99DE2","#C087DB","#BA78D6","#BF84DA","#C592DF","#BD80D9","#C087DB","#BA78D6","#B062CF","#B670D3","#AE5DCD","#A13EC3","#AA53CA","#AF5FCE","#B56ED3","#AD5ACC","#B062CF","#AA53CA","#AB55CB","#A444C5","#A13CC3","#A64AC7","#9E37C1","#9A2EBE","#9F39C2","#A548C6","#A84FC9","#A240C4","#9D34C0","#A03CC3","#A13EC3","#9A2EBE","#9A2DBE","#9B2FBF","#9520BA","#9117B7","#9725BB","#8F12B5","#8F14B6","#8904B1"],"labelClust":[0.343,0.264,0.231,0.198,0.182,0.161,0.189,0.227,0.248,0.233,0.212,0.239,0.229,0.249,0.279,0.298,0.282,0.263,0.289,0.278,0.298,0.328,0.31,0.335,0.376,0.348,0.332,0.312,0.339,0.329,0.348,0.345,0.368,0.378,0.36,0.385,0.397,0.383,0.363,0.354,0.374,0.389,0.379,0.376,0.398,0.398,0.396,0.416,0.428,0.409,0.435,0.432,0.454],"Leaf":[0,0,0,0,0,1,1,1,0,0,1,0,1,1,1,0,0,1,0,1,1,0,1,1,0,0,0,1,0,1,0,1,1,0,1,1,0,0,0,1,1,0,0,1,1,0,1,1,0,1,0,1,1],"font.size":[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16],"scaling.min":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5],"scaling.max":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5]},"edges":{"id":["edge1","edge2","edge3","edge4","edge5","edge6","edge7","edge8","edge9","edge10","edge11","edge12","edge13","edge14","edge15","edge16","edge17","edge18","edge19","edge20","edge21","edge22","edge23","edge24","edge25","edge26","edge27","edge28","edge29","edge30","edge31","edge32","edge33","edge34","edge35","edge36","edge37","edge38","edge39","edge40","edge41","edge42","edge43","edge44","edge45","edge46","edge47","edge48","edge49","edge50","edge51","edge52"],"from":[1,2,4,8,16,16,8,4,9,18,18,37,37,9,2,5,10,10,21,21,5,11,11,1,3,6,12,12,25,25,51,51,6,13,13,3,7,14,28,28,14,29,58,58,29,59,59,7,15,15,31,31],"to":[2,4,8,16,32,33,17,9,18,36,37,74,75,19,5,10,20,21,42,43,11,22,23,3,6,12,24,25,50,51,102,103,13,26,27,7,14,28,56,57,29,58,116,117,59,118,119,15,30,31,62,63],"label":[">= 2.5",">= 3.5",">= 4.5","< 52",">= 4.5","< 4.5",">= 52","< 4.5","< 52",">= 4.5","< 4.5",">= 37","< 37",">= 52","< 3.5","< 52",">= 4.5","< 4.5",">= 37","< 37",">= 52",">= 4.5","< 4.5","< 2.5",">= 1.5","< 52",">= 4.5","< 4.5",">= 37","< 37",">= 3.5","< 3.5",">= 52",">= 4.5","< 4.5","< 1.5","< 52",">= 4.5",">= 37","< 37","< 4.5",">= 37",">= 3.5","< 3.5","< 37",">= 3.5","< 3.5",">= 52",">= 4.5","< 4.5",">= 3.5","< 3.5"],"value":[14494,7297,2426,1569,396,1173,857,4871,3298,807,2491,1204,1287,1573,7197,4701,1125,3576,1734,1842,2496,675,1821,34229,14653,9680,2354,7326,3606,3720,3189,531,4973,1332,3641,19576,13110,3204,1692,1512,9906,4826,4199,627,5080,4404,676,6466,1770,4696,4167,529],"title":["<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=2.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><2.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=1.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><1.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>"],"color":["#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7"],"font.size":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14],"font.align":["horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal"],"smooth.enabled":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"smooth.type":["cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier"],"smooth.roundness":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"layout":{"hierarchical":{"enabled":true,"direction":"UD"}},"interaction":{"dragNodes":false,"selectConnectedEdges":false,"tooltipDelay":500,"zoomSpeed":1},"edges":{"scaling":{"label":{"enabled":false}}}},"groups":null,"width":"100%","height":"600px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"footer":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":50000,"to":0},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":true,"resetHighlight":true,"clusterOptions":{"fixed":true,"physics":false},"keepCoord":true,"labelSuffix":"(cluster)"},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;\n                      white-space: nowrap;\n                      font-family: cursive;font-size:12px;font-color:purple;background-color: #E6E6E6;\n                      border-radius: 15px;","OnceEvents":{"stabilized":"function() { \n        this.setOptions({layout:{hierarchical:false}, physics:{solver:'barnesHut', enabled:true, stabilization : false}, nodes : {physics : false, fixed : true}});\n    }"},"legend":{"width":0.1,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["active_products","age","satisfaction_score"],"color":["#F1B8C2","#A9D1A5","#B4C7ED"],"shape":["dot","dot","dot"],"size":[22,22,22],"Leaf":[0,0,0],"font.size":[16,16,16],"id":[10000,10001,10002]},"nodesToDataframe":true},"tree":{"updateShape":true,"shapeVar":"dot","shapeY":"square","colorVar":{"variable":["active_products","age","satisfaction_score"],"color":["#F1B8C2","#A9D1A5","#B4C7ED"]},"colorY":{"colRamp":["function (x) ","roundcolor(cbind(palette[[1L]](x), palette[[2L]](x), palette[[3L]](x), ","    if (alpha) palette[[4L]](x))) * 255"],"colorTerm":["#AC57CB","#C592DE","#CFABE6","#DAC4EF","#DFD0F2","#E6E0F8","#DDCAF1","#D0AEE7","#CA9EE2","#CFA9E6","#D5B9EB","#CDA4E4","#D0ACE7","#C99DE2","#C087DB","#BA78D6","#BF84DA","#C592DF","#BD80D9","#C087DB","#BA78D6","#B062CF","#B670D3","#AE5DCD","#A13EC3","#AA53CA","#AF5FCE","#B56ED3","#AD5ACC","#B062CF","#AA53CA","#AB55CB","#A444C5","#A13CC3","#A64AC7","#9E37C1","#9A2EBE","#9F39C2","#A548C6","#A84FC9","#A240C4","#9D34C0","#A03CC3","#A13EC3","#9A2EBE","#9A2DBE","#9B2FBF","#9520BA","#9117B7","#9725BB","#8F12B5","#8F14B6","#8904B1"],"colorY":["#E6E0F8","#8904B1"],"vardecidedClust":[0.343,0.264,0.231,0.198,0.182,0.161,0.189,0.227,0.248,0.233,0.212,0.239,0.229,0.249,0.279,0.298,0.282,0.263,0.289,0.278,0.298,0.328,0.31,0.335,0.376,0.348,0.332,0.312,0.339,0.329,0.348,0.345,0.368,0.378,0.36,0.385,0.397,0.383,0.363,0.354,0.374,0.389,0.379,0.376,0.398,0.398,0.396,0.416,0.428,0.409,0.435,0.432,0.454]}},"export":{"type":"png","css":"float:right;-webkit-border-radius: 10;\n                  -moz-border-radius: 10;\n                  border-radius: 10px;\n                  font-family: Arial;\n                  color: #ffffff;\n                  font-size: 12px;\n                  background: #090a0a;\n                  padding: 4px 8px 4px 4px;\n                  text-decoration: none;","background":"#fff","name":"network.png","label":"Export as png"}},"evals":["OnceEvents.stabilized"],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(fit_tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression tree:
+rpart(formula = churn_probability ~ ., data = df, method = "anova", 
+    control = rpart.control(minsplit = min_split, cp = complexity_parameter, 
+        maxdepth = max_depth))
+
+Variables actually used in tree construction:
+[1] active_products    age                satisfaction_score
+
+Root node error: 219.19/48723 = 0.0044988
+
+n= 48723 
+
+          CP nsplit rel error   xerror       xstd
+1  0.5800289      0  1.000000 1.000043 0.00627295
+2  0.0941640      1  0.419971 0.420013 0.00247266
+3  0.0748503      2  0.325807 0.325845 0.00214497
+4  0.0401858      3  0.250957 0.251005 0.00148259
+5  0.0315888      4  0.210771 0.210816 0.00135536
+6  0.0182975      5  0.179182 0.179232 0.00122872
+7  0.0154771      6  0.160885 0.160930 0.00100837
+8  0.0103138      7  0.145408 0.145456 0.00091862
+9  0.0072677      8  0.135094 0.135136 0.00084414
+10 0.0057120      9  0.127826 0.127871 0.00080281
+11 0.0051813     10  0.122114 0.122164 0.00076774
+12 0.0042732     11  0.116933 0.116988 0.00072724
+13 0.0037777     12  0.112660 0.112718 0.00070448
+14 0.0032497     13  0.108882 0.108945 0.00068469
+15 0.0028163     14  0.105632 0.105702 0.00066662
+16 0.0024804     15  0.102816 0.102889 0.00064901
+17 0.0020363     16  0.100336 0.100414 0.00062718
+18 0.0016785     17  0.098299 0.098384 0.00060700
+19 0.0014586     18  0.096621 0.096704 0.00059617
+20 0.0014151     19  0.095162 0.095369 0.00058733
+21 0.0011580     20  0.093747 0.093833 0.00057785
+22 0.0011447     21  0.092589 0.092460 0.00056864
+23 0.0010924     22  0.091444 0.091376 0.00056020
+24 0.0010850     23  0.090352 0.090287 0.00055310
+25 0.0010817     24  0.089267 0.090177 0.00055247
+26 0.0010297     25  0.088185 0.088852 0.00054304
+27 0.0010000     26  0.087156 0.088053 0.00053628</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bestcp <span class="ot">&lt;-</span> fit_tree<span class="sc">$</span>cptable[<span class="fu">which.min</span>(fit_tree<span class="sc">$</span>cptable[,<span class="st">"xerror"</span>]), <span class="st">"CP"</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pruned_tree <span class="ot">&lt;-</span> <span class="fu">prune</span>(fit_tree, <span class="at">cp =</span> bestcp)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">visTree</span>(pruned_tree, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">edgesFontSize =</span> <span class="dv">14</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesFontSize =</span> <span class="dv">16</span>, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="st">"100%"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Pruned Customer Churn Prediction Tree (Optimized)"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">submain =</span> <span class="fu">paste</span>(<span class="st">"Best CP value:"</span>, <span class="fu">round</span>(bestcp, <span class="dv">4</span>)),      </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">colorY =</span> <span class="fu">c</span>(<span class="st">"#E1F5FE"</span>, <span class="st">"#01579B"</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="htmlwidget-3a7f20b9ac32ec4f01c5" style="width:100%;height:600px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a7f20b9ac32ec4f01c5">{"x":{"nodes":{"id":[1,2,4,8,16,32,33,17,9,18,36,37,74,75,19,5,10,20,21,42,43,11,22,23,3,6,12,24,25,50,51,102,103,13,26,27,7,14,28,56,57,29,58,116,117,59,118,119,15,30,31,62,63],"label":["active_products","active_products","active_products","age","satisfaction_score","0.161","0.189","0.227","age","satisfaction_score","0.212","age","0.229","0.249","0.279","age","satisfaction_score","0.263","age","0.278","0.298","satisfaction_score","0.31","0.335","active_products","age","satisfaction_score","0.312","age","0.329","satisfaction_score","0.345","0.368","satisfaction_score","0.36","0.385","age","satisfaction_score","age","0.354","0.374","age","satisfaction_score","0.376","0.398","satisfaction_score","0.396","0.416","satisfaction_score","0.409","satisfaction_score","0.432","0.454"],"level":[1,2,3,4,5,6,6,5,4,5,6,6,7,7,5,3,4,5,5,6,6,4,5,5,2,3,4,5,5,6,6,7,7,4,5,5,3,4,5,6,6,5,6,7,7,6,7,7,4,5,5,6,6],"color":["#F1B8C2","#F1B8C2","#F1B8C2","#A9D1A5","#B4C7ED","#E1F5FE","#CBE5F4","#AED1E7","#A9D1A5","#B4C7ED","#B9D9EC","#A9D1A5","#ACD0E6","#9DC5E0","#86B5D6","#A9D1A5","#B4C7ED","#92BDDB","#A9D1A5","#87B5D6","#77AACF","#B4C7ED","#6FA4CB","#5B97C3","#F1B8C2","#A9D1A5","#B4C7ED","#6DA3CA","#A9D1A5","#609AC5","#B4C7ED","#5491BF","#4285B8","#B4C7ED","#4989BA","#357CB2","#A9D1A5","#B4C7ED","#A9D1A5","#4D8CBC","#3E82B6","#A9D1A5","#B4C7ED","#3C81B5","#2C75AE","#B4C7ED","#2D76AE","#1E6BA7","#B4C7ED","#236FAA","#B4C7ED","#1162A2","#01579B"],"value":[48723,14494,7297,2426,1569,396,1173,857,4871,3298,807,2491,1204,1287,1573,7197,4701,1125,3576,1734,1842,2496,675,1821,34229,14653,9680,2354,7326,3606,3720,3189,531,4973,1332,3641,19576,13110,3204,1692,1512,9906,4826,4199,627,5080,4404,676,6466,1770,4696,4167,529],"shape":["dot","dot","dot","dot","dot","square","square","square","dot","dot","square","dot","square","square","square","dot","dot","square","dot","square","square","dot","square","square","dot","dot","dot","square","dot","square","dot","square","square","dot","square","square","dot","dot","dot","square","square","dot","dot","square","square","dot","square","square","dot","square","dot","square","square"],"title":["<div style=\"text-align:center;\">N : <b>100%<\/b> (48723)<br>Complexity : <b>0.58<\/b><br>Mean : <b>0.343<\/b><br>Variance : <b>0.004<\/b><\/div>","<div style=\"text-align:center;\">N : <b>29.7%<\/b> (14494)<br>Complexity : <b>0.075<\/b><br>Mean : <b>0.264<\/b><br>Variance : <b>0.002<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 2.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>15%<\/b> (7297)<br>Complexity : <b>0.018<\/b><br>Mean : <b>0.231<\/b><br>Variance : <b>0.002<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5%<\/b> (2426)<br>Complexity : <b>0.005<\/b><br>Mean : <b>0.198<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.2%<\/b> (1569)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.182<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>0.8%<\/b> (396)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.161<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.4%<\/b> (1173)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.189<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.8%<\/b> (857)<br>Complexity : <b>0<\/b><br>Mean : <b>0.227<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> >= 4.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10%<\/b> (4871)<br>Complexity : <b>0.01<\/b><br>Mean : <b>0.248<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.8%<\/b> (3298)<br>Complexity : <b>0.002<\/b><br>Mean : <b>0.233<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.7%<\/b> (807)<br>Complexity : <b>0<\/b><br>Mean : <b>0.212<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.1%<\/b> (2491)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.239<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.5%<\/b> (1204)<br>Complexity : <b>0<\/b><br>Mean : <b>0.229<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.6%<\/b> (1287)<br>Complexity : <b>0<\/b><br>Mean : <b>0.249<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.2%<\/b> (1573)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.279<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 3.5 <= <b>active_products<\/b> < 4.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>14.8%<\/b> (7197)<br>Complexity : <b>0.015<\/b><br>Mean : <b>0.298<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9.6%<\/b> (4701)<br>Complexity : <b>0.002<\/b><br>Mean : <b>0.282<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.3%<\/b> (1125)<br>Complexity : <b>0<\/b><br>Mean : <b>0.263<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.3%<\/b> (3576)<br>Complexity : <b>0.002<\/b><br>Mean : <b>0.289<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.6%<\/b> (1734)<br>Complexity : <b>0<\/b><br>Mean : <b>0.278<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.8%<\/b> (1842)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.298<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>5.1%<\/b> (2496)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.328<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.4%<\/b> (675)<br>Complexity : <b>0<\/b><br>Mean : <b>0.31<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.7%<\/b> (1821)<br>Complexity : <b>0<\/b><br>Mean : <b>0.335<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 2.5 <= <b>active_products<\/b> < 3.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>70.3%<\/b> (34229)<br>Complexity : <b>0.094<\/b><br>Mean : <b>0.376<\/b><br>Variance : <b>0.002<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 2.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>30.1%<\/b> (14653)<br>Complexity : <b>0.032<\/b><br>Mean : <b>0.348<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>19.9%<\/b> (9680)<br>Complexity : <b>0.006<\/b><br>Mean : <b>0.332<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>4.8%<\/b> (2354)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.312<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>15%<\/b> (7326)<br>Complexity : <b>0.003<\/b><br>Mean : <b>0.339<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.4%<\/b> (3606)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.329<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.6%<\/b> (3720)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.348<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.5%<\/b> (3189)<br>Complexity : <b>0<\/b><br>Mean : <b>0.345<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 37<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.1%<\/b> (531)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.368<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.2%<\/b> (4973)<br>Complexity : <b>0.003<\/b><br>Mean : <b>0.378<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>2.7%<\/b> (1332)<br>Complexity : <b>0<\/b><br>Mean : <b>0.36<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>7.5%<\/b> (3641)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.385<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b>  <\/b> 1.5 <= <b>active_products<\/b> < 2.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>40.2%<\/b> (19576)<br>Complexity : <b>0.04<\/b><br>Mean : <b>0.397<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>26.9%<\/b> (13110)<br>Complexity : <b>0.007<\/b><br>Mean : <b>0.383<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>6.6%<\/b> (3204)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.363<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.5%<\/b> (1692)<br>Complexity : <b>0<\/b><br>Mean : <b>0.354<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.1%<\/b> (1512)<br>Complexity : <b>0<\/b><br>Mean : <b>0.374<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>20.3%<\/b> (9906)<br>Complexity : <b>0.004<\/b><br>Mean : <b>0.389<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9.9%<\/b> (4826)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.379<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>8.6%<\/b> (4199)<br>Complexity : <b>0<\/b><br>Mean : <b>0.376<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.3%<\/b> (627)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.398<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b>  <\/b> 37 <= <b>age<\/b> < 52<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>10.4%<\/b> (5080)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.398<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9%<\/b> (4404)<br>Complexity : <b>0<\/b><br>Mean : <b>0.396<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.4%<\/b> (676)<br>Complexity : <b>0<\/b><br>Mean : <b>0.416<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> < 37<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>13.3%<\/b> (6466)<br>Complexity : <b>0.004<\/b><br>Mean : <b>0.428<\/b><br>Variance : <b>0.001<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>3.6%<\/b> (1770)<br>Complexity : <b>0<\/b><br>Mean : <b>0.409<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> >= 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>9.6%<\/b> (4696)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.435<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>8.6%<\/b> (4167)<br>Complexity : <b>0<\/b><br>Mean : <b>0.432<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b>  <\/b> 3.5 <= <b>satisfaction_score<\/b> < 4.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>","<div style=\"text-align:center;\">N : <b>1.1%<\/b> (529)<br>Complexity : <b>0.001<\/b><br>Mean : <b>0.454<\/b><br>Variance : <b>0<\/b><hr class = \"rPartvisNetwork\">\n<div class =\"showOnMe2\"><div style=\"text-align:center;\"><U style=\"color:blue;\"  onmouseover=\"this.style.cursor='pointer';\" onmouseout=\"this.style.cursor='default';\">Rules<\/U><\/div>\n<div class=\"showMeRpartTTp2\" style=\"display:none;\">\n<b> active_products <\/b> < 1.5<br><b> age <\/b> >= 52<br><b> satisfaction_score <\/b> < 3.5<\/script><script type=\"text/javascript\">$(document).ready(function(){\n$(\".showOnMe2\").click(function(){\n$(\".showMeRpartTTp2\").toggle();\n$.sparkline_display_visible();\n});\n  });<\/script><\/div><\/div>\n\n<\/div>"],"fixed":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"colorClust":["#5592C0","#91BDDA","#ABCFE6","#C4E0F1","#D0E9F6","#E1F5FE","#CBE5F4","#AED1E7","#9EC6E0","#A9CEE5","#B9D9EC","#A4CAE3","#ACD0E6","#9DC5E0","#86B5D6","#77AACF","#83B3D4","#92BDDB","#7FB0D2","#87B5D6","#77AACF","#619AC5","#6FA4CB","#5B97C3","#3C80B5","#5290BE","#5E98C4","#6DA3CA","#5995C1","#609AC5","#518FBE","#5491BF","#4285B8","#3A7FB4","#4989BA","#357CB2","#2C75AE","#377DB3","#4687B9","#4D8CBC","#3E82B6","#327AB1","#3A7FB4","#3C81B5","#2C75AE","#2B75AD","#2D76AE","#1E6BA7","#1565A3","#236FAA","#0F61A1","#1162A2","#01579B"],"labelClust":[0.343,0.264,0.231,0.198,0.182,0.161,0.189,0.227,0.248,0.233,0.212,0.239,0.229,0.249,0.279,0.298,0.282,0.263,0.289,0.278,0.298,0.328,0.31,0.335,0.376,0.348,0.332,0.312,0.339,0.329,0.348,0.345,0.368,0.378,0.36,0.385,0.397,0.383,0.363,0.354,0.374,0.389,0.379,0.376,0.398,0.398,0.396,0.416,0.428,0.409,0.435,0.432,0.454],"Leaf":[0,0,0,0,0,1,1,1,0,0,1,0,1,1,1,0,0,1,0,1,1,0,1,1,0,0,0,1,0,1,0,1,1,0,1,1,0,0,0,1,1,0,0,1,1,0,1,1,0,1,0,1,1],"font.size":[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16],"scaling.min":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5],"scaling.max":[22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5]},"edges":{"id":["edge1","edge2","edge3","edge4","edge5","edge6","edge7","edge8","edge9","edge10","edge11","edge12","edge13","edge14","edge15","edge16","edge17","edge18","edge19","edge20","edge21","edge22","edge23","edge24","edge25","edge26","edge27","edge28","edge29","edge30","edge31","edge32","edge33","edge34","edge35","edge36","edge37","edge38","edge39","edge40","edge41","edge42","edge43","edge44","edge45","edge46","edge47","edge48","edge49","edge50","edge51","edge52"],"from":[1,2,4,8,16,16,8,4,9,18,18,37,37,9,2,5,10,10,21,21,5,11,11,1,3,6,12,12,25,25,51,51,6,13,13,3,7,14,28,28,14,29,58,58,29,59,59,7,15,15,31,31],"to":[2,4,8,16,32,33,17,9,18,36,37,74,75,19,5,10,20,21,42,43,11,22,23,3,6,12,24,25,50,51,102,103,13,26,27,7,14,28,56,57,29,58,116,117,59,118,119,15,30,31,62,63],"label":[">= 2.5",">= 3.5",">= 4.5","< 52",">= 4.5","< 4.5",">= 52","< 4.5","< 52",">= 4.5","< 4.5",">= 37","< 37",">= 52","< 3.5","< 52",">= 4.5","< 4.5",">= 37","< 37",">= 52",">= 4.5","< 4.5","< 2.5",">= 1.5","< 52",">= 4.5","< 4.5",">= 37","< 37",">= 3.5","< 3.5",">= 52",">= 4.5","< 4.5","< 1.5","< 52",">= 4.5",">= 37","< 37","< 4.5",">= 37",">= 3.5","< 3.5","< 37",">= 3.5","< 3.5",">= 52",">= 4.5","< 4.5",">= 3.5","< 3.5"],"value":[14494,7297,2426,1569,396,1173,857,4871,3298,807,2491,1204,1287,1573,7197,4701,1125,3576,1734,1842,2496,675,1821,34229,14653,9680,2354,7326,3606,3720,3189,531,4973,1332,3641,19576,13110,3204,1692,1512,9906,4826,4199,627,5080,4404,676,6466,1770,4696,4167,529],"title":["<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=2.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><2.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\">>=1.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>active_products<\/b><\/div><div style=\"text-align:center;\"><1.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\"><37<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>","<div style=\"text-align:center;\"><b>age<\/b><\/div><div style=\"text-align:center;\">>=52<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><4.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\">>=3.5<\/div>","<div style=\"text-align:center;\"><b>satisfaction_score<\/b><\/div><div style=\"text-align:center;\"><3.5<\/div>"],"color":["#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7","#8181F7"],"font.size":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14],"font.align":["horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal","horizontal"],"smooth.enabled":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"smooth.type":["cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier","cubicBezier"],"smooth.roundness":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"layout":{"hierarchical":{"enabled":true,"direction":"UD"}},"interaction":{"dragNodes":false,"selectConnectedEdges":false,"tooltipDelay":500,"zoomSpeed":1},"edges":{"scaling":{"label":{"enabled":false}}}},"groups":null,"width":"100%","height":"600px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"Pruned Customer Churn Prediction Tree (Optimized)","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":{"text":"Best CP value: 0.001","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"footer":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-size:12px;text-align:center;"},"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":50000,"to":0},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":true,"resetHighlight":true,"clusterOptions":{"fixed":true,"physics":false},"keepCoord":true,"labelSuffix":"(cluster)"},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;\n                      white-space: nowrap;\n                      font-family: cursive;font-size:12px;font-color:purple;background-color: #E6E6E6;\n                      border-radius: 15px;","OnceEvents":{"stabilized":"function() { \n        this.setOptions({layout:{hierarchical:false}, physics:{solver:'barnesHut', enabled:true, stabilization : false}, nodes : {physics : false, fixed : true}});\n    }"},"legend":{"width":0.1,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["active_products","age","satisfaction_score"],"color":["#F1B8C2","#A9D1A5","#B4C7ED"],"shape":["dot","dot","dot"],"size":[22,22,22],"Leaf":[0,0,0],"font.size":[16,16,16],"id":[10000,10001,10002]},"nodesToDataframe":true},"tree":{"updateShape":true,"shapeVar":"dot","shapeY":"square","colorVar":{"variable":["active_products","age","satisfaction_score"],"color":["#F1B8C2","#A9D1A5","#B4C7ED"]},"colorY":{"colRamp":["function (x) ","roundcolor(cbind(palette[[1L]](x), palette[[2L]](x), palette[[3L]](x), ","    if (alpha) palette[[4L]](x))) * 255"],"colorTerm":["#5592C0","#91BDDA","#ABCFE6","#C4E0F1","#D0E9F6","#E1F5FE","#CBE5F4","#AED1E7","#9EC6E0","#A9CEE5","#B9D9EC","#A4CAE3","#ACD0E6","#9DC5E0","#86B5D6","#77AACF","#83B3D4","#92BDDB","#7FB0D2","#87B5D6","#77AACF","#619AC5","#6FA4CB","#5B97C3","#3C80B5","#5290BE","#5E98C4","#6DA3CA","#5995C1","#609AC5","#518FBE","#5491BF","#4285B8","#3A7FB4","#4989BA","#357CB2","#2C75AE","#377DB3","#4687B9","#4D8CBC","#3E82B6","#327AB1","#3A7FB4","#3C81B5","#2C75AE","#2B75AD","#2D76AE","#1E6BA7","#1565A3","#236FAA","#0F61A1","#1162A2","#01579B"],"colorY":["#E1F5FE","#01579B"],"vardecidedClust":[0.343,0.264,0.231,0.198,0.182,0.161,0.189,0.227,0.248,0.233,0.212,0.239,0.229,0.249,0.279,0.298,0.282,0.263,0.289,0.278,0.298,0.328,0.31,0.335,0.376,0.348,0.332,0.312,0.339,0.329,0.348,0.345,0.368,0.378,0.36,0.385,0.397,0.383,0.363,0.354,0.374,0.389,0.379,0.376,0.398,0.398,0.396,0.416,0.428,0.409,0.435,0.432,0.454]}},"export":{"type":"png","css":"float:right;-webkit-border-radius: 10;\n                  -moz-border-radius: 10;\n                  border-radius: 10px;\n                  font-family: Arial;\n                  color: #ffffff;\n                  font-size: 12px;\n                  background: #090a0a;\n                  padding: 4px 8px 4px 4px;\n                  text-decoration: none;","background":"#fff","name":"network.png","label":"Export as png"}},"evals":["OnceEvents.stabilized"],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="random-forest" class="level1">
+<h1><strong>Random Forest</strong></h1>
+<section id="splitting-of-data-set-into-train-vs.-test-data" class="level3">
+<h3 class="anchored" data-anchor-id="splitting-of-data-set-into-train-vs.-test-data"><strong>Splitting of data set into train vs.&nbsp;test data</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>churn_probability, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">p =</span> <span class="fl">0.8</span>,      </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">list =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">times =</span> <span class="dv">1</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> df[trainIndex, ]  </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>df_test  <span class="ot">&lt;-</span> df[<span class="sc">-</span>trainIndex, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="hyperparameter-tuning-and-training-of-model" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameter-tuning-and-training-of-model"><strong>Hyperparameter Tuning and Training of Model</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>repeatcvControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"repeatedcv"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">number =</span> <span class="dv">10</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">repeats =</span> <span class="dv">3</span>,          </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">verboseIter =</span> <span class="cn">TRUE</span>     </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>n_features <span class="ot">&lt;-</span> <span class="fu">ncol</span>(df_train) <span class="sc">-</span> <span class="dv">1</span>      </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>my_mtry <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">sqrt</span>(n_features))  </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  churn_probability <span class="sc">~</span> .,            </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df_train,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"ranger"</span>, </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> repeatcvControl, </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">num.trees =</span> <span class="dv">50</span>,                  </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">importance =</span> <span class="st">"impurity"</span>, </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> my_mtry, </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">min.node.size =</span> <span class="dv">5</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">splitrule =</span> <span class="st">"variance"</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+ Fold01.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold01.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold02.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold02.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold03.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold03.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold04.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold04.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold05.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold05.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold06.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold06.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold07.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold07.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold08.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold08.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold09.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold09.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold10.Rep1: mtry=3, min.node.size=5, splitrule=variance 
+- Fold10.Rep1: mtry=3, min.node.size=5, splitrule=variance 
++ Fold01.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold01.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold02.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold02.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold03.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold03.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold04.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold04.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold05.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold05.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold06.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold06.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold07.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold07.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold08.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold08.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold09.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold09.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold10.Rep2: mtry=3, min.node.size=5, splitrule=variance 
+- Fold10.Rep2: mtry=3, min.node.size=5, splitrule=variance 
++ Fold01.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold01.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold02.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold02.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold03.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold03.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold04.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold04.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold05.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold05.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold06.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold06.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold07.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold07.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold08.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold08.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold09.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold09.Rep3: mtry=3, min.node.size=5, splitrule=variance 
++ Fold10.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+- Fold10.Rep3: mtry=3, min.node.size=5, splitrule=variance 
+Aggregating results
+Fitting final model on full training set</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_test<span class="sc">$</span>fit_forest <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_model, df_test)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>test_r2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(df_test<span class="sc">$</span>churn_probability, df_test<span class="sc">$</span>fit_forest)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>rf_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df_test, <span class="fu">aes</span>(<span class="at">x =</span> churn_probability, <span class="at">y =</span> fit_forest)) <span class="sc">+</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Actual Churn Probability"</span>, </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Churn Probability"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Test R-squared: "</span>, <span class="fu">round</span>(test_r2, <span class="at">digits =</span> <span class="dv">3</span>))) <span class="sc">+</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>rf_residuals <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df_test, <span class="fu">aes</span>(<span class="at">x =</span> churn_probability, </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">y =</span> (fit_forest <span class="sc">-</span> churn_probability))) <span class="sc">+</span> </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">"blue3"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Residuals (Error)"</span>, <span class="at">x =</span> <span class="st">"Actual Churn Probability"</span>) <span class="sc">+</span> </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red4"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> rf_scatter <span class="sc">+</span> rf_residuals <span class="sc">+</span> </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Model Performance Analysis: Churn Probability Prediction"</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Left: Predicted vs Actual | Right: Residual Distribution"</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>)))</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImp</span>(rf_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ranger variable importance
+
+  only 20 most important variables shown (out of 32)
+
+                                     Overall
+active_products                    100.00000
+age                                 15.44660
+satisfaction_score                   4.65512
+tx_count                             1.95480
+credit_utilization_ratio             1.77532
+customer_tenure                      1.70568
+income_bracketLow                    0.35878
+failed_transactions                  0.33876
+complaint_topicsNo Complaints        0.19185
+income_bracketMedium                 0.17600
+locationBogotá, Cundinamarca         0.17386
+complaint_topicsCustomer service     0.13711
+complaint_topicsApp performance      0.13573
+locationCali, Valle del Cauca        0.13442
+locationMedellín, Antioquia          0.13441
+locationBarranquilla, Atlántico      0.12759
+complaint_topicsTransaction issues   0.11893
+complaint_topicsFees                 0.11614
+income_bracketVery High              0.11138
+locationCúcuta, Norte de Santander   0.09798</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>trctrl_none <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"none"</span>) </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>tree_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>rsquared_trees <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>my_mtry <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">sqrt</span>(<span class="fu">ncol</span>(df_train) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> tree_range){</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  rf_tmp <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    churn_probability <span class="sc">~</span> ., </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_train,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"ranger"</span>, </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">trControl =</span> trctrl_none, </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">num.trees =</span> i,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>, </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">mtry =</span> my_mtry, <span class="at">min.node.size =</span> <span class="dv">5</span>, <span class="at">splitrule =</span> <span class="st">"variance"</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  rsquared_trees <span class="ot">&lt;-</span> <span class="fu">append</span>(rsquared_trees, rf_tmp<span class="sc">$</span>finalModel<span class="sc">$</span>r.squared)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>rsquared_plot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(tree_range, rsquared_trees)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rsquared_plot, <span class="fu">aes</span>(<span class="at">x =</span> tree_range, <span class="at">y =</span> rsquared_trees)) <span class="sc">+</span> </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2c3e50"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span> </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#e74c3c"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Trees"</span>, </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"OOB R-squared Value"</span>,</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Random Forest Hyperparameter Optimization"</span>,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Analysis of model accuracy vs. computational cost (number of trees)"</span>,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data: Colombia Customer Churn Dataset"</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Take-home_Ex_2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="mapping-r-parameters-to-shiny-ui-components" class="level1">
+<h1>Mapping R Parameters to Shiny UI Components</h1>
+<section id="mapping-table" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-table">Mapping Table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Module</strong></td>
+<td><strong>Parameter</strong></td>
+<td><strong>Shiny UI Input</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Global Filter</strong></td>
+<td><code>income_bracket</code></td>
+<td><code>selectInput()</code></td>
+<td>Allow users to filter specific income groups to enable localized model analysis.</td>
+</tr>
+<tr class="odd">
+<td><strong>Decision Tree</strong></td>
+<td><code>cp</code>&nbsp;(Complexity)</td>
+<td><code>sliderInput()</code></td>
+<td>Dynamically adjust pruning parameters to balance model overfitting and underfitting.</td>
+</tr>
+<tr class="even">
+<td><strong>Decision Tree</strong></td>
+<td><code>max_depth</code></td>
+<td><code>sliderInput()</code></td>
+<td>Limit the maximum tree depth to ensure interactive visualizations remain clean and readable.</td>
+</tr>
+<tr class="odd">
+<td><strong>Random Forest</strong></td>
+<td><code>num_trees</code></td>
+<td><code>sliderInput()</code></td>
+<td>Adjust the number of trees in the forest to observe changes in model stability and&nbsp;R2&nbsp;values.</td>
+</tr>
+<tr class="even">
+<td><strong>Random Forest</strong></td>
+<td><code>run_rf</code></td>
+<td><code>actionButton()</code></td>
+<td>Reduce server computational load by using action buttons for event-driven reactivity.</td>
+</tr>
+<tr class="odd">
+<td><strong>What-If Simulator</strong></td>
+<td><code>age</code>,&nbsp;<code>tenure</code>, etc.</td>
+<td><code>numericInput()</code>&nbsp;&amp;&nbsp;<code>sliderInput()</code></td>
+<td>Enable users to input specific customer features for real-time churn risk prediction.</td>
+</tr>
+<tr class="even">
+<td><strong>What-If Simulator</strong></td>
+<td><code>predict_sim</code></td>
+<td><code>actionButton()</code></td>
+<td>Trigger Random Forest model inference on a single test sample.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="expected-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="expected-outputs">Expected Outputs</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Output</strong></td>
+<td><strong>R package</strong></td>
+<td><strong>Shiny UI Output</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Summary Stats</strong></td>
+<td><code>valueBox()</code></td>
+<td><code>valueBoxOutput()</code></td>
+<td>Displays summary statistics for the selected subgroup, including&nbsp;<strong>sample size</strong>,&nbsp;<strong>average risk probability</strong>, and&nbsp;<strong>top occupations</strong>.</td>
+</tr>
+<tr class="odd">
+<td><strong>Interactive Tree</strong></td>
+<td><code>visNetwork</code></td>
+<td><code>visNetworkOutput()</code></td>
+<td>Provides an&nbsp;<strong>interactive decision path diagram</strong>&nbsp;with&nbsp;<strong>zoom and click functionalities</strong>&nbsp;for granular exploration.</td>
+</tr>
+<tr class="even">
+<td><strong>Diagnostics</strong></td>
+<td><code>plotcp()</code></td>
+<td><code>plotOutput()</code></td>
+<td>Visualizes the&nbsp;<strong>Complexity Parameter (CP) plot</strong>&nbsp;to assist users in identifying the&nbsp;<strong>optimal pruning point</strong>&nbsp;to prevent overfitting.</td>
+</tr>
+<tr class="odd">
+<td><strong>Performance</strong></td>
+<td><code>plotly</code></td>
+<td><code>plotlyOutput()</code></td>
+<td>Generates an&nbsp;<strong>interactive scatter plot</strong>&nbsp;comparing&nbsp;<strong>predicted values vs.&nbsp;actual observations</strong>&nbsp;to evaluate model fit.</td>
+</tr>
+<tr class="even">
+<td><strong>Variable Imp.</strong></td>
+<td><code>ggplot2</code></td>
+<td><code>plotOutput()</code></td>
+<td>Presents the&nbsp;<strong>variable importance ranking</strong>&nbsp;to highlight the most significant drivers of customer churn.</td>
+</tr>
+<tr class="odd">
+<td><strong>Automated Text</strong></td>
+<td><code>renderUI()</code></td>
+<td><code>uiOutput()</code></td>
+<td>Automatically generates&nbsp;<strong>dynamic textual insights</strong>&nbsp;and interpretations based on real-time model execution results.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ui-selection-rationale-table" class="level2">
+<h2 class="anchored" data-anchor-id="ui-selection-rationale-table">UI Selection Rationale Table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Parameter</strong></td>
+<td><strong>UI Component</strong></td>
+<td><strong>Rationale</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Complexity (CP)</strong></td>
+<td><code>sliderInput()</code></td>
+<td>Allows users to fine-tune the pruning threshold within a specific range with immediate visual feedback.</td>
+</tr>
+<tr class="odd">
+<td><strong>Max Depth</strong></td>
+<td><code>sliderInput()</code></td>
+<td>Best for constrained integer ranges, preventing users from entering values that might cause computational lag.</td>
+</tr>
+<tr class="even">
+<td><strong>Income Bracket</strong></td>
+<td><code>selectInput()</code></td>
+<td>Ideal for categorical data, providing a clean dropdown list for users to select specific customer segments.</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of Trees</strong></td>
+<td><code>sliderInput()</code></td>
+<td>Uses a step of 10 to balance model stability and processing time, ensuring a smooth user experience.</td>
+</tr>
+<tr class="even">
+<td><strong>Occupation</strong></td>
+<td><code>selectInput()</code></td>
+<td>Since there are multiple categories, a dropdown menu saves sidebar space compared to radio buttons.</td>
+</tr>
+<tr class="odd">
+<td><strong>Run RF</strong></td>
+<td><code>actionButton()</code></td>
+<td>Essential for heavy computations; it prevents the app from recalculating every time a single parameter changes (Event Reactivity).</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="ui-design-storyboard" class="level1">
+<h1>UI Design (Storyboard)</h1>
+<p>The following storyboards illustrate the interactive layout of the three main modules. Each component is optimized to guide users from technical parameter tuning to actionable business insights.</p>
+<section id="module-1-decision-tree-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="module-1-decision-tree-analysis">Module 1: Decision Tree Analysis</h2>
+<p><img src="images/clipboard-1751439232.png" class="img-fluid"></p>
+<p>This module focuses on transparency, allowing users to trace the logic of customer churn through an interactive tree.</p>
+<ul>
+<li><p><strong>Logic Path Discovery:</strong>&nbsp;Users can manipulate hyperparameters to see how the tree structure adapts in real-time.</p></li>
+<li><p><strong>Segment Health:</strong>&nbsp;High-level KPIs provide immediate context for the filtered customer subgroup.</p></li>
+</ul>
+</section>
+<section id="module-2-random-forest-what-if-simulator" class="level2">
+<h2 class="anchored" data-anchor-id="module-2-random-forest-what-if-simulator">Module 2: Random Forest &amp; What-If Simulator</h2>
+<p><img src="images/clipboard-3105046844.png" class="img-fluid"></p>
+<p>This module provides a more robust predictive engine and a sandbox environment for individual risk assessment.</p>
+<ul>
+<li><p><strong>Model Confidence:</strong>&nbsp;By comparing actual vs.&nbsp;predicted results, users can verify the model’s reliability (R2) before making decisions.</p></li>
+<li><p><strong>Predictive Simulation:</strong>&nbsp;The “What-If” area allows front-line staff to input specific customer profiles and receive instant risk scores.</p></li>
+</ul>
+</section>
+<section id="module-3-automated-insights" class="level2">
+<h2 class="anchored" data-anchor-id="module-3-automated-insights">Module 3: Automated Insights</h2>
+<p><img src="images/clipboard-1604078278.png" class="img-fluid"></p>
+<p>The final module bridges the gap between complex machine learning outputs and business interpretation.</p>
+<ul>
+<li><strong>Dynamic Interpretation:</strong>&nbsp;Instead of just showing numbers, this panel generates automated text summaries that highlight the most significant churn drivers based on the current model run.</li>
+</ul>
+</section>
+</section>
+<section id="selection-of-visualisation-techniques-design-principles" class="level1">
+<h1><strong>Selection of Visualisation Techniques &amp; Design Principles</strong></h1>
+<p>This section outlines the design choices and interactivity principles implemented to ensure an effective user experience for clustering analysis:</p>
+<ul>
+<li><strong>Strategic Prioritization (infoBox &amp; uiOutput):</strong>&nbsp;High-level rankings (Gold, Silver, Bronze) are placed at the top of the dashboard. This follows the&nbsp;<strong>“Overview First”</strong>&nbsp;design pattern, providing immediate situational awareness of the most critical customer segments before users dive into technical details.</li>
+</ul>
+<!-- -->
+<ul>
+<li><p><strong>Cluster Diagnosis (Elbow Plot):</strong>&nbsp;A line chart with point markers is used to visualize the Total Within-cluster Sum of Squares (WSS). This ensures&nbsp;<strong>“Model Transparency,”</strong>&nbsp;allowing users to mathematically justify and validate the selection of the cluster count (k).</p></li>
+<li><p><strong>Behavioral Mapping (Scatter Plot &amp; plotly):</strong>&nbsp;An interactive scatter plot with&nbsp;<strong>Log-Log scaling</strong>&nbsp;is used to handle highly skewed transaction data. Integrating&nbsp;<code>plotly</code>&nbsp;supports the&nbsp;<strong>“Details-on-Demand”</strong>&nbsp;principle, where users can hover over data points to identify specific occupations within each cluster.</p></li>
+<li><p><strong>Strategic Positioning (Retention Quadrant):</strong>&nbsp;A 4-quadrant bubble chart maps average volume against churn risk. This enables&nbsp;<strong>“Actionable Insights,”</strong>&nbsp;helping stakeholders visually categorize occupations into “High-Value/High-Risk” quadrants for prioritized intervention.</p></li>
+<li><p><strong>Demographic Composition (Stacked Bar Chart):</strong>&nbsp;A 100% stacked bar chart provides a clear view of cluster makeup. By applying&nbsp;<code>fct_lump</code>&nbsp;to handle high-cardinality occupations, the design reduces&nbsp;<strong>“Cognitive Overload,”</strong>&nbsp;ensuring the most dominant segments are easily identifiable.</p></li>
+<li><p><strong>Performance Optimization (Event Reactivity):</strong>&nbsp;To ensure a responsive UX,&nbsp;<code>actionButton()</code>&nbsp;and&nbsp;<code>eventReactive()</code>are used for K-means computations. This implements&nbsp;<strong>“Execution Control,”</strong>&nbsp;preventing server lag by ensuring heavy analytical calculations only occur when the user is ready.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
