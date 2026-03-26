@@ -44,10 +44,10 @@ website:
             href: "Hands on Exercise/Hands on Exercise_8/Hands-on Exercise_8_2.html"
           - text: "8c. Analytical Mapping"
             href: "Hands on Exercise/Hands on Exercise_8/Hands-on Exercise_8_3.html"
-          - text: "9.Modelling, Visualising and Analysing Network Data with R"
+          - text: "9. Modelling, Visualising and Analysing Network Data with R"
             href: "Hands on Exercise/Hands on Exercise_9/Hands-on Exercise_9.html"
-          - text: "Hands-on Exercise 10"
-            href: "Hands on Exercise/Hands on Exercise_10/Hands-on-Exercise_10.html"
+          - text: "10. Information Dashboard Design: R methods"
+            href: "Hands on Exercise/Hands on Exercise_10/Hands-on Exercise_10.html"
       - text: "<img src='/image/timeturner.png' style='height:30px; vertical-align:middle; margin-right:8px;'> Take-home Exercise"
         menu:
           - text: "Take-home Exercise 1"
