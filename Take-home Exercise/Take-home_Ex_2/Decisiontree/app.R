@@ -70,7 +70,7 @@ ui <- dashboardPage(
                               selectInput("sim_occ", "Occupation:", choices = NULL)),
                        column(4, numericInput("sim_active", "Active Products:", value = 2),
                               numericInput("sim_tenure", "Tenure (Months):", value = 12)),
-                       column(4, sliderInput("sim_satisfaction", "Satisfaction Score:", min = 1, max = 10, value = 7),
+                       column(4, sliderInput("sim_satisfaction", "Satisfaction Score:", min = 1, max = 6, value = 3),
                               actionButton("predict_sim", "Predict Risk", class = "btn-warning", style="width: 100%; margin-top: 25px;"))),
                    
                    # Model Confidence (R2) is now integrated into this box (Bottom-Right)

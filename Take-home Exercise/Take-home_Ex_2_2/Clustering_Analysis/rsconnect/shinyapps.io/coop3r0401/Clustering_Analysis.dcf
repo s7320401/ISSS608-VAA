@@ -1,0 +1,12 @@
+name: Clustering_Analysis
+title: Clustering_Analysis
+username: coop3r0401
+account: coop3r0401
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16945763
+bundleId: 11735608
+url: https://coop3r0401.shinyapps.io/Clustering_Analysis/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

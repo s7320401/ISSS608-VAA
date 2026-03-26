@@ -60,6 +60,10 @@ website:
         menu:
           - text: "In Class Exercise 6"
             href: "https://coop3r0401.shinyapps.io/In_Class_Ex_6/"
+          - text: "Regression Model"
+            href: "https://coop3r0401.shinyapps.io/regression_tree/"
+          - text: "Clustering Analysis"
+            href: "https://coop3r0401.shinyapps.io/Clustering_Analysis/"
     right:
       - text: "<img src='/image/castle.png' style='height:40px; vertical-align:middle;'>"
         href: index.qmd
